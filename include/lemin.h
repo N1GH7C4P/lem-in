@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/23 23:37:04 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:17:06 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,27 @@
 // Define the maximum number of vertices in the graph
  #define N 6
  
- 
+typedef struct s_map
+{
+	int 	ants;
+	t_node 	start;
+	t_node 	end;
+	t_graph	adj_list;
+	int 	adj_matrix[N + 1][N + 1];
+}	t_map;
+
+void	set_ants(int ants, t_map *map);
+
 // Data structure to store a graph object
 
 typedef struct s_node
 {
-    int dest;
+	int dest;
 	char *name;
 	int x;
 	int y;
-    struct s_node* next;
+	struct s_node* next;
 } t_node;
- 
 
 typedef struct s_graph
 {

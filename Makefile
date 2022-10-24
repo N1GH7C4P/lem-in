@@ -2,7 +2,7 @@
 
 LEMIN					= lemin
 INCLUDE					= -I include
-LIBFT_LIB				= ./libft/libft.a
+LIBFT_LIB				= -L ./libft -lft
 LIBFT					= libft
 SRC_DIR					= src/
 OBJ_DIR					= src/
@@ -29,7 +29,7 @@ TEST_FILES	=	*
 
 LEMIN_SRC 	= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(LEMIN_SRC_FILES)))
 LEMIN_OBJ 	= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(LEMIN_SRC_FILES)))
-TEST 			= 	$(addprefix $(TEST_DIR), $(addsuffix .test.c, $(TEST_FILES)))
+TEST 		= 	$(addprefix $(TEST_DIR), $(addsuffix .test.c, $(TEST_FILES)))
 
 all:			$(LEMIN)
 
