@@ -1,6 +1,6 @@
 #Variables
 
-LEMIN					= lemin
+LEMIN					= lem-in
 INCLUDE					= -I include
 LIBFT_LIB				= -L ./libft -lft
 LIBFT					= libft
