@@ -1,37 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   ft_countlines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 14:45:44 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/24 15:12:24 by kpolojar         ###   ########.fr       */
+/*   Created: 2022/10/25 16:21:09 by kpolojar          #+#    #+#             */
+/*   Updated: 2022/10/25 16:22:44 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/lemin.h"
-#include "../libft/libft.h"
-
-t_map	*new_map(void)
-{	
-	t_map	*map;
-
-	map = (t_map *)malloc(sizeof(t_map));
-	return (map);
-}
-
-void	set_ants(int nb, t_map *map)
+int	ft_countlines(char	**lines)
 {
-	map->ants = nb;
-}
+	int	count;
 
-void	set_start(int nb, t_map *map)
-{
-	map->start = nb;
-}
-
-void	set_end(int nb, t_map *map)
-{
-	map->end = nb;
+	if (!lines)
+		return (0);
+	count = 0;
+	while (lines[count])
+		count++;
+	return (count);
 }

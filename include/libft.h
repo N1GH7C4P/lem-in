@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 17:53:36 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/09/30 14:46:30 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/10/25 16:20:27 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int		ft_strcmp(const char *str1, const char *str2);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
 int		ft_atoi(const char *s);
 int		ft_countdigits(long long nb, int base);
+int		ft_countlines(char	**lines);
 int		ft_isdigit(int arg);
 int		ft_isalpha(int arg);
 int		ft_isalnum(int arg);
