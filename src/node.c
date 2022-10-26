@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:18:31 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/25 18:23:39 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:18:42 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	print_node(t_node *node, int v)
 	ft_putchar(',');
 	ft_putnbr(node->y);
 	ft_putstr(")");
+	if (node->visited == 1 && v == 1)
+		ft_putstr(" VISITED ");
 	if (node->is_start == 1 && v == 1)
 		ft_putstr(" START");
 	if (node->is_end == 1 && v == 1)
