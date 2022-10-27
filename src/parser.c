@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 22:27:40 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/26 16:12:56 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:22:37 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_node	*handle_node(char *line, int ret, t_graph *graph)
 	else if (ret == 2)
 		graph->end = new_node;
 	ft_free_array(words);
+	graph->nb_of_nodes = graph->nb_of_nodes + 1;
 	return (new_node);
 }
 
@@ -97,6 +98,8 @@ t_edge **handle_edges(char **lines, t_graph *graph, t_node **nodes)
 			edges[edges_processed++] = handle_edge(lines[i], nodes);
 		i++;
 	}
+	ft_putstr("Edges total: ");
+	ft_putnbr(edges_processed);
 	edges[edges_processed] = NULL;
 	graph->nb_of_edges = edges_processed;
 	print_edges(edges);
@@ -119,7 +122,9 @@ t_node **handle_nodes(char **lines, t_graph *graph)
 			ret = handle_comments(lines[i]);
 		else if (identify_line(lines[i], i) == 2)
 		{
-			nodes[nodes_processed++] = handle_node(lines[i], ret, graph);
+			nodes[nodes_processed] = handle_node(lines[i], ret, graph);
+			nodes[nodes_processed]->id = nodes_processed;
+			nodes_processed++;
 			ret = 0;
 		}
 		i++;
@@ -156,7 +161,7 @@ int parser(t_graph *graph)
 {
 	static t_node	**nodes;
 	static t_edge	**edges;
-
+	
 	char **lines = read_from_stdout();
 	graph->ants = ft_atoi(lines[0]);
 	nodes = handle_nodes(lines, graph);

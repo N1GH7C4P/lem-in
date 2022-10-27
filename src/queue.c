@@ -6,19 +6,20 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:54:13 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/26 18:25:37 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/10/27 16:49:50 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include "../libft/libft.h"
 
-t_queue	*new_queue()
+t_queue	*new_queue(size_t n)
 {
 	t_queue	*new_queue;
 
 	new_queue = (t_queue *)malloc(sizeof(t_queue));
-	new_queue->inp_arr = (t_node **)malloc(sizeof(t_node *) * QUEUE_MAX + 1);
+	new_queue->inp_arr = (t_node **)malloc(sizeof(t_node *) * n + 1);
+	new_queue->inp_arr[n] = NULL;
 	new_queue->front = -1;
 	new_queue->rear = -1;
 	return (new_queue);

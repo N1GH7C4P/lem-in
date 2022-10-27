@@ -6,24 +6,27 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/26 16:14:24 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:24:19 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include "../libft/libft.h"
 
-t_node	*find_univisited_node(t_node *node, t_graph *graph)
+t_node	*find_neighbour(t_node *node, t_graph *graph)
 {
 	int i;
 
 	i = 0;
-	while (graph->edges[i])
+	while (graph->edges[i] && i < graph->nb_of_edges)
 	{
+		ft_putstr("index: ");
+		ft_putnbr(i);
+		ft_putendl("");
 		// Correct start node
-		if (ft_strequ(graph->edges[i]->start->name, node->name))
+		if (graph->edges[i]->start->id == node->id)
 		{
-			// Node not visited
+			ft_putendl("Coreect node START.");
 			if (graph->edges[i]->end->visited == 0)
 			{
 				ft_putstr("Connecting edge found: ");
@@ -32,9 +35,9 @@ t_node	*find_univisited_node(t_node *node, t_graph *graph)
 				return (graph->edges[i]->end);
 			}
 		}
-		else if (ft_strequ(graph->edges[i]->end->name, node->name))
+		else if (graph->edges[i]->end->id == node->id)
 		{
-			// Node not visited
+			ft_putendl("Coreect node END.");
 			if (graph->edges[i]->start->visited == 0)
 			{
 				ft_putstr("Connecting edge found: ");

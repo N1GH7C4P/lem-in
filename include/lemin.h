@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/26 17:57:40 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/10/27 16:47:21 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 // Data structure to store a graph node.
 typedef struct s_node
 {
+	int id;
 	char *name;
 	int	visited;
 	int	path_id;
@@ -43,6 +44,8 @@ typedef struct s_graph
 	int 	ants;
 	int		nb_of_nodes;
 	int		nb_of_edges;
+	int		nb_of_paths;
+
 	t_node 	*start;
 	t_node 	*end;
 	t_edge	**edges;
@@ -63,9 +66,13 @@ void	show(t_queue *q);
 int		is_empty(t_queue *q);
 
 t_graph	*create_graph(void);
+t_node	*find_path(t_node *node, t_graph *graph, int path_id);
+int		traverse_path(t_graph *g, int path_id);
+void	traverse_paths(t_graph *g);
 void	printGraph(t_graph* graph);
+void	reset_visit_status(t_graph *g);
 
-t_node	*find_univisited_node(t_node *node, t_graph *graph);
+t_node	*find_neighbour(t_node *node, t_graph *graph);
 t_node	*create_node(int x, int y, char *name, int ret);
 t_node	*get_node_by_name(char *name, t_node **nodes);
 void	print_nodes(t_node **nodes, int v);
@@ -75,8 +82,8 @@ t_edge	*create_edge(t_node *start, t_node *end);
 void	print_edges(t_edge **edges);
 void	print_edge(t_edge *edge);
 
-void createAdjMatrix(int Adj[][N + 1], int arr[][2], int M);
-void printAdjMatrix(int Adj[][N + 1]);
+void	createAdjMatrix(int Adj[][N + 1], int arr[][2], int M);
+void 	printAdjMatrix(int Adj[][N + 1]);
 
 void	set_ants(int ants, t_graph *graph);
 

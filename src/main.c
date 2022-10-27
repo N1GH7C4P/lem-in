@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:05:00 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/26 16:13:18 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/10/27 16:47:53 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ int main(void)
 	graph = create_graph();
 	parser(graph);
 	ft_putendl("Parsing complete!");
-	ft_putnbr(bfs(graph));
+	bfs(graph);
+	traverse_paths(graph);
 }
