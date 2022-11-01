@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/01 23:35:39 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/02 00:12:39 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ typedef struct s_node
 	int	path_id;
 	int	is_start;
 	int	is_end;
-	int x;
-	int y;
 } t_node;
 
 // Data structure to store a graph edge, made of two node objects.
@@ -92,7 +90,7 @@ void	printGraph(t_graph* graph);
 void	reset_visit_status(t_graph *g);
 
 t_node	*find_neighbour(t_node *node, t_graph *graph);
-t_node	*create_node(int x, int y, char *name, int ret);
+t_node	*create_node(char *name, int ret);
 t_node	*get_node_by_name(char *name, t_node **nodes);
 void	print_nodes(t_node **nodes, int v);
 void	print_node(t_node *node, int v);

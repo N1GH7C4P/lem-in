@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/01 22:47:30 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/02 00:33:44 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,11 @@ int	bfs(t_graph *graph)
 			ft_putendl("neighbour found!");
 			print_node(neighbour, 1);
 			ft_putendl("");
-			ft_putstr("neighbour id: ");
-			ft_putnbr(neighbour->id);
-			ft_putendl("");
-			ft_putendl("parent: ");
-			print_node(node, 1);
-			ft_putendl("");
 			prev[neighbour->id] = node;
+			ft_putendl("Enqueued: ");
+			print_node(neighbour, 1);
+			ft_putendl("");
 			enqueue(q, neighbour);
-			ft_putendl("Enqueued");
 			if (neighbour->is_end == 1)
 			{
 				ft_putendl("End node found!");

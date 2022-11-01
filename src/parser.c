@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 22:27:40 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/01 23:04:51 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/02 00:28:55 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,8 @@ t_edge	*handle_edge(char *line, t_node **nodes)
 
 	words = ft_strsplit(line, '-');
 	start = get_node_by_name(words[0], nodes);
-	ft_putendl("edge start: ");
-	print_node(start, 1);
-	ft_putendl("");
 	end = get_node_by_name(words[1], nodes);
-	ft_putendl("edge end: ");
-	print_node(end, 1);
-	ft_putendl("");
 	new_edge = create_edge(start, end);
-	print_edge(new_edge);
-	ft_putendl("");
 	ft_free_array(words);
 	return (new_edge);
 }
@@ -42,7 +34,7 @@ t_node	*handle_node(char *line, int ret, t_graph *graph)
 	t_node	*new_node;
 	
 	words = ft_strsplit(line, ' ');
-	new_node = create_node(ft_atoi(words[1]), ft_atoi(words[2]), words[0], ret);
+	new_node = create_node(words[0], ret);
 	if (ret == 1)
 		graph->start = new_node;
 	else if (ret == 2)
@@ -96,9 +88,6 @@ void	handle_edges(char **lines, t_graph *graph)
 	int		i;
 	int		edges_processed;
 
-	ft_putstr("lines: ");
-	ft_putnbr(count_lines_with_id(lines, 1));
-	ft_putendl("");
 	graph->edges = (t_edge **)malloc(sizeof(t_edge *) * (count_lines_with_id(lines, 1) + 1));
 	edges_processed = 0;
 	i = 1;
@@ -108,12 +97,8 @@ void	handle_edges(char **lines, t_graph *graph)
 			graph->edges[edges_processed++] = handle_edge(lines[i], graph->nodes);
 		i++;
 	}
-	ft_putstr("Edges total: ");
-	ft_putnbr(edges_processed);
-	ft_putendl("");
 	graph->edges[edges_processed] = NULL;
 	graph->nb_of_edges = edges_processed;
-	print_edges(graph->edges);
 }
 
 void	handle_nodes(char **lines, t_graph *graph)
@@ -139,7 +124,6 @@ void	handle_nodes(char **lines, t_graph *graph)
 		i++;
 	}
 	graph->nodes[nodes_processed] = NULL;
-	print_nodes(graph->nodes, 1);
 }
 
 char	**read_from_stdout()
@@ -172,7 +156,6 @@ int parser(t_graph *graph)
 	lines = read_from_stdout();
 	graph->ants = ft_atoi(lines[0]);
 	handle_nodes(lines, graph);
-	ft_putendl("Nodes parsed");
 	handle_edges(lines, graph);	
 	ft_free_array(lines);
 	return (0);

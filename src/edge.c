@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/01 22:55:52 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/02 00:28:12 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,18 @@ t_node	*find_neighbour(t_node *node, t_graph *graph)
 	i = 0;
 	while (i < graph->nb_of_edges && graph->edges[i])
 	{
-		print_edge(graph->edges[i]);
-		ft_putendl("");
-		// Correct start node
 		if (graph->edges[i]->start->id == node->id)
 		{
-			ft_putendl("Correct node START.");
 			if (graph->edges[i]->end->visited == 0)
-			{
-				ft_putstr("Connecting edge found: ");
-				print_edge(graph->edges[i]);
-				ft_putendl("");
 				return (graph->edges[i]->end);
-			}
 		}
 		else if (graph->edges[i]->end->id == node->id)
 		{
-			ft_putendl("Correct node END.");
 			if (graph->edges[i]->start->visited == 0)
-			{
-				ft_putstr("Connecting edge found: ");
-				print_edge(graph->edges[i]);
-				ft_putendl("");
 				return (graph->edges[i]->start);
-			}
 		}
 		i++;
 	}
-	ft_putendl("No more edges found.");
 	return (NULL);
 }
 
@@ -76,10 +60,8 @@ t_edge	*create_edge(t_node *start, t_node *end)
 {
 	t_edge	*new_edge;
 
-	ft_putendl("creating new edge");
 	new_edge = (t_edge *)malloc(sizeof(t_edge));
 	new_edge->start = start;
 	new_edge->end = end;
-
 	return (new_edge);
 }

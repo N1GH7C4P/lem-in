@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:05:00 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/01 23:46:11 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/02 00:34:38 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 int main(void)
 {
 	static	t_graph	*graph;
+	int		i;
 
 	graph = create_graph();
 	parser(graph);
-	ft_putendl("Parsing complete!");
-	bfs(graph);
+	i = bfs(graph);
+	while (i == 1)
+		i = bfs(graph);
 	traverse_paths(graph);
-	ft_putendl("printing path: ");
 	print_path(graph->paths[1]);
 }

@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:18:31 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/01 22:15:25 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/02 00:27:57 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,11 @@ void	print_node(t_node *node, int v)
 	}
 }
 
-t_node *create_node(int x, int y, char *name, int ret)
+t_node *create_node(char *name, int ret)
 {
 	t_node *new_node;
 
 	new_node = (t_node *)malloc(sizeof(t_node));
-	new_node->x = x;
-	new_node->y = y;
-	ft_putstr("node name: ");
-	ft_putendl(name);
 	new_node->name = ft_strdup(name);
 	new_node->is_end = 0;
 	new_node->is_start = 0;
