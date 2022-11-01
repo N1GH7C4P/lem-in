@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/27 16:47:21 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/01 23:35:39 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,19 @@ typedef struct s_node
 	int y;
 } t_node;
 
-// Data structure to store a graph edge
-typedef struct s_edge {
+// Data structure to store a graph edge, made of two node objects.
+typedef struct s_edge
+{
 	t_node *start;
 	t_node *end;
 } t_edge;
+
+// Data structure to store a path object, made of any number of edge objects;
+typedef struct s_path
+{
+	t_node	**nodes;
+	int		path_length;
+} t_path;
 
 // Data structure to store a graph object
 typedef struct s_graph
@@ -48,7 +56,9 @@ typedef struct s_graph
 
 	t_node 	*start;
 	t_node 	*end;
+	t_node	**nodes;
 	t_edge	**edges;
+	t_path	**paths;
 }	t_graph;
 
 // Data structure to queue node objects
@@ -58,6 +68,15 @@ typedef struct s_queue
 	int rear;
 	int front;
 } t_queue;
+
+
+int		count_nodes_with_path_id(t_graph *g, int path_id);
+t_node	*find_next_node_in_path(t_node *node, t_graph *graph, int path_id);
+void	delete_path(t_path *p);
+t_path	*new_path(int path_length);
+t_path	*create_path(t_graph *g, int path_id);
+void	traverse_paths(t_graph *g);
+void	print_path(t_path *p);
 
 t_queue	*new_queue();
 t_node	*dequeue(t_queue *q);

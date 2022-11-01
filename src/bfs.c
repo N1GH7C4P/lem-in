@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/27 17:14:48 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/01 22:47:30 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,27 @@
 
 int	backtrack(t_node **history, t_graph *graph)
 {
+	ft_putendl("backtracking");
 	t_node	*node;
-
 	node = graph->end;
+	graph->nb_of_paths = graph->nb_of_paths + 1;
+	ft_putstr("path_id: ");
+	ft_putnbr(graph->nb_of_paths);
+	ft_putendl("end node: ");
+	node->path_id = graph->nb_of_paths;
+	print_node(node, 1);
+	ft_putendl("");
 	while (node)
 	{
-		node->path_id = graph->nb_of_paths;
 		node = history[node->id];
+		node->path_id = graph->nb_of_paths;
 		node->visited = 2;
+		ft_putendl("previous: ");
+		print_node(node, 1);
+		ft_putendl("");
 		if (node->is_start)
 			break ;
 	}
-	graph->nb_of_paths++;
 	reset_visit_status(graph);
 	return (1);
 }
@@ -52,9 +61,9 @@ int	bfs(t_graph *graph)
 		print_node(node, 1);
 		ft_putendl("");
 		neighbour = find_neighbour(node, graph);
-		neighbour->visited = 1;
 		while (neighbour)
 		{
+			neighbour->visited = 1;
 			ft_putendl("neighbour found!");
 			print_node(neighbour, 1);
 			ft_putendl("");
@@ -74,8 +83,8 @@ int	bfs(t_graph *graph)
 				return (1);
 			}
 			neighbour = find_neighbour(node, graph);
-			neighbour->visited = 1;
 		}
 	}
+	ft_putendl("No path found.");
 	return (0);
 }
