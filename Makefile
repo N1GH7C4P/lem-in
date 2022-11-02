@@ -1,6 +1,6 @@
 #Variables
 
-LEMIN					= lemin
+LEMIN					= lem-in
 INCLUDE					= -I include
 LIBFT_LIB				= ./libft/libft.a
 LIBFT					= libft
@@ -29,27 +29,25 @@ TEST_FILES	=	*
 
 LEMIN_SRC 	= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(LEMIN_SRC_FILES)))
 LEMIN_OBJ 	= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(LEMIN_SRC_FILES)))
-TEST 			= 	$(addprefix $(TEST_DIR), $(addsuffix .test.c, $(TEST_FILES)))
+TEST 		= 	$(addprefix $(TEST_DIR), $(addsuffix .test.c, $(TEST_FILES)))
 
 all:			$(LEMIN)
 
 $(LEMIN)	:	$(LEMIN_OBJ)
 				@make -C $(LIBFT)
 				${CC} $(CFLAGS) -o $(LEMIN) $(LEMIN_OBJ) $(LIBFT_LIB) $(INCLUDE)
-				@echo "$(GREEN)lemin compiled!$(DEF_COLOR)"
+				@echo "$(GREEN)lem-in compiled!$(DEF_COLOR)"
 
 
 clean:
 				@$(RM) -rf $(LEMIN_OBJ)
-				@echo "$(BLUE) push_swap object files cleaned!$(DEF_COLOR)"
-				@$(RM) -rf $(LEMIN_OBJ)
-				@echo "$(BLUE) lemin object files cleaned!$(DEF_COLOR)"
+				@echo "$(BLUE) lem-in object files cleaned!$(DEF_COLOR)"
 				@make clean -C $(LIBFT)
 				@echo "$(BLUE)libft object files cleaned!$(DEF_COLOR)"
 
 fclean:			clean
 				@$(RM) -f $(LEMIN)
-				@echo "$(CYAN)lemin binary files cleaned!$(DEF_COLOR)"
+				@echo "$(CYAN)lem-in binary files cleaned!$(DEF_COLOR)"
 				@make clean -C $(LIBFT)
 				@echo "$(CYAN)libft binary files cleaned!$(DEF_COLOR)"
 

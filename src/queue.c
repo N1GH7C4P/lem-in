@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:54:13 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/27 16:49:50 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/02 13:50:38 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,19 @@ t_queue	*new_queue(size_t n)
 	return (new_queue);
 }
 
+void debug_queue(t_queue *q)
+{
+	ft_putstr("front: ");
+	ft_putnbr(q->front);
+	ft_putstr(" rear: ");
+	ft_putnbr(q->rear);
+	ft_putendl(" peak: ");
+	print_node(q->inp_arr[q->rear], 0);
+}
+
 int	is_empty(t_queue *q)
 {	
 	if (q->front == - 1 || q->front > q->rear)
-	if (q->front == q->rear)
 		return (1);
 	return (0);
 }

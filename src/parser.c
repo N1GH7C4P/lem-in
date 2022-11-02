@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 22:27:40 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/02 00:28:55 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/02 18:52:37 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,21 +128,19 @@ void	handle_nodes(char **lines, t_graph *graph)
 
 char	**read_from_stdout()
 {
-	int ret;
-	char *line;
-	char **lines;
-	int i;
+	int		ret;
+	int		i;
+	char 	*line;
+	char 	**lines;
 
 	i = 0;
 	line = NULL;
 	lines = (char **)malloc(sizeof(char *) * (MAX_LINES + 1));
-	ret = ft_get_next_line(1, &line);
+	ret = ft_get_next_line(0, &line);
 	while (ret)
 	{
 		lines[i] = ft_strdup(line);
-		ret = ft_get_next_line(1, &line);
-		if (!ft_strcmp(line, ""))
-			break;
+		ret = ft_get_next_line(0, &line);
 		i++;
 	}
 	free(line);
@@ -156,7 +154,7 @@ int parser(t_graph *graph)
 	lines = read_from_stdout();
 	graph->ants = ft_atoi(lines[0]);
 	handle_nodes(lines, graph);
-	handle_edges(lines, graph);	
+	handle_edges(lines, graph);
 	ft_free_array(lines);
 	return (0);
 }

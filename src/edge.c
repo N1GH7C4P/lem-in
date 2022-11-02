@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/02 00:28:12 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/02 17:33:08 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_node	*find_neighbour(t_node *node, t_graph *graph)
 
 void	print_edges(t_edge **edges)
 {
-	ft_putendl("printing edges");
 	int i;
 
 	i = 0;

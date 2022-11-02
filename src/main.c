@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:05:00 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/02 00:34:38 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/02 18:38:36 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,12 @@ int main(void)
 	while (i == 1)
 		i = bfs(graph);
 	traverse_paths(graph);
-	print_path(graph->paths[1]);
+	i = 1;
+	place_all_ants(graph);
+	while (i <= graph->nb_of_paths)
+	{
+		print_path(graph->paths[i]);
+		i++;
+	}
+	return (0);
 }
