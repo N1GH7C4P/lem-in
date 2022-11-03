@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:18:31 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/02 00:27:57 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/03 22:13:05 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ void	print_node(t_node *node, int v)
 		if (node->is_end == 1)
 			ft_putstr(" END");
 	}
+}
+
+void	free_node(t_node *n)
+{
+	free(n->name);
+	free(n);
 }
 
 t_node *create_node(char *name, int ret)

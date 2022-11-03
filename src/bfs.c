@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/02 17:32:07 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/03 22:32:42 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,14 @@ int	bfs(t_graph *graph)
 			if (neighbour->is_end == 1)
 			{
 				backtrack(prev, graph);
+				free_queue(q);
+				free(prev);
 				return (1);
 			}
 			neighbour = find_neighbour(node, graph);
 		}
 	}
+	free(prev);
+	free_queue(q);
 	return (0);
 }

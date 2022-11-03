@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 22:27:40 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/02 18:52:37 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/03 21:53:43 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_edge	*handle_edge(char *line, t_node **nodes)
 	return (new_edge);
 }
 
-t_node	*handle_node(char *line, int ret, t_graph *graph)
+t_node	*handle_node(char *line, int ret, t_graph *g)
 {
 	char	**words;
 	t_node	*new_node;
@@ -36,11 +36,11 @@ t_node	*handle_node(char *line, int ret, t_graph *graph)
 	words = ft_strsplit(line, ' ');
 	new_node = create_node(words[0], ret);
 	if (ret == 1)
-		graph->start = new_node;
+		g->start = new_node;
 	else if (ret == 2)
-		graph->end = new_node;
+		g->end = new_node;
 	ft_free_array(words);
-	graph->nb_of_nodes = graph->nb_of_nodes + 1;
+	g->nb_of_nodes = g->nb_of_nodes + 1;
 	return (new_node);
 }
 
@@ -83,47 +83,48 @@ int count_lines_with_id(char **lines, int id)
 	return (count);
 }
 
-void	handle_edges(char **lines, t_graph *graph)
+void	handle_edges(char **lines, t_graph *g)
 {
 	int		i;
 	int		edges_processed;
 
-	graph->edges = (t_edge **)malloc(sizeof(t_edge *) * (count_lines_with_id(lines, 1) + 1));
+	g->edges = (t_edge **)malloc(sizeof(t_edge *) * (count_lines_with_id(lines, 1) + 1));
 	edges_processed = 0;
 	i = 1;
 	while (lines[i])
 	{
 		if (identify_line(lines[i], i) == 1)
-			graph->edges[edges_processed++] = handle_edge(lines[i], graph->nodes);
+			g->edges[edges_processed++] = handle_edge(lines[i], g->nodes);
 		i++;
 	}
-	graph->edges[edges_processed] = NULL;
-	graph->nb_of_edges = edges_processed;
+	g->edges[edges_processed] = NULL;
+	g->nb_of_edges = edges_processed;
 }
 
-void	handle_nodes(char **lines, t_graph *graph)
+void	handle_nodes(char **lines, t_graph *g)
 {
 	int		i;
 	int		ret;
 	int		nodes_processed;
 
+	ret = 0;
 	nodes_processed = 0;
 	i = 0;
-	graph->nodes = (t_node **)malloc(sizeof(t_node *) * (count_lines_with_id(lines, 2) + 1));
+	g->nodes = (t_node **)malloc(sizeof(t_node *) * (count_lines_with_id(lines, 2) + 1));
 	while (lines[i])
 	{
 		if (identify_line(lines[i], i) == 0)
 			ret = handle_comments(lines[i]);
 		else if (identify_line(lines[i], i) == 2)
 		{
-			graph->nodes[nodes_processed] = handle_node(lines[i], ret, graph);
-			graph->nodes[nodes_processed]->id = nodes_processed;
+			g->nodes[nodes_processed] = handle_node(lines[i], ret, g);
+			g->nodes[nodes_processed]->id = nodes_processed;
 			nodes_processed++;
 			ret = 0;
 		}
 		i++;
 	}
-	graph->nodes[nodes_processed] = NULL;
+	g->nodes[nodes_processed] = NULL;
 }
 
 char	**read_from_stdout()
@@ -147,14 +148,16 @@ char	**read_from_stdout()
 	return (lines);
 }
 
-int parser(t_graph *graph)
+int parser(t_graph *g)
 {
 	char **lines;
 	
 	lines = read_from_stdout();
-	graph->ants = ft_atoi(lines[0]);
-	handle_nodes(lines, graph);
-	handle_edges(lines, graph);
+	g->ants_available = ft_atoi(lines[0]);
+	g->ants = (t_ant **)malloc(sizeof(t_ant *) * (g->ants_available + 1));
+	g->ants[g->ants_available] = NULL;
+	handle_nodes(lines, g);
+	handle_edges(lines, g);
 	ft_free_array(lines);
 	return (0);
 }

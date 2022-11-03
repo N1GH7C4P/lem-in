@@ -6,17 +6,12 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 23:24:57 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/02 17:35:56 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/03 15:37:49 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include "../libft/libft.h"
-
-void	place_ant_on_path(t_path *p)
-{
-	p->ants++;
-}
 
 int		count_nodes_with_path_id(t_graph *g, int path_id)
 {

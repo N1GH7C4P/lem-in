@@ -9,7 +9,7 @@ OBJ_DIR					= src/
 TEST_DIR				= test/
 TEST_EXE				= run_test
 CC						= gcc
-CFLAGS					= -Wall -Wextra -O3 -Werror
+CFLAGS					= -Wall -Wextra -Werror -O3 # -fsanitize=address
 RM						= rm -f
 
 # Colors
@@ -24,7 +24,7 @@ MAGENTA = \033[0;95m
 CYAN = \033[0;96m
 WHITE = \033[0;97m
 
-LEMIN_SRC_FILES	= main graph utils node parser edge bfs queue path
+LEMIN_SRC_FILES	= main graph utils node parser edge bfs queue path error ant
 TEST_FILES	=	*
 
 LEMIN_SRC 	= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(LEMIN_SRC_FILES)))

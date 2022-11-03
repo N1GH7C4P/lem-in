@@ -6,24 +6,12 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 15:58:27 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/02 17:32:40 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/03 22:38:34 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include "../libft/libft.h"
-
-void	place_all_ants(t_graph *g)
-{
-	t_path *p;
-
-	while (g->ants > 0)
-	{
-		p = find_optimal_path(g);
-		place_ant_on_path(p);
-		g->ants--;
-	}
-}
 
 t_path	*find_optimal_path(t_graph *g)
 {
@@ -54,8 +42,36 @@ t_graph	*create_graph(void)
 	new_graph->nb_of_nodes = 0;
 	new_graph->nb_of_edges = 0;
 	new_graph->nb_of_paths = 0;
+	new_graph->ants_placed = 0;
 
 	return (new_graph);
+}
+
+void	free_graph(t_graph *g)
+{
+	int i;
+
+	i = 0;
+	while (g->nodes[i])
+		free_node(g->nodes[i++]);
+	free(g->nodes);
+	i = 0;
+	while (g->edges[i])
+		free(g->edges[i++]);
+	free(g->edges);
+	i = 0;
+	while (g->ants[i])
+		free(g->ants[i++]);
+	free(g->ants);
+	i = 1;
+	while (g->paths[i])
+	{
+		free(g->paths[i]->nodes);
+		free(g->paths[i]);
+		i++;
+	}
+	free(g->paths);
+	free(g);
 }
 
 void	reset_visit_status(t_graph *g)

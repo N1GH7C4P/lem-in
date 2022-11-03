@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:54:13 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/02 13:50:38 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/03 22:28:21 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ t_queue	*new_queue(size_t n)
 	new_queue->front = -1;
 	new_queue->rear = -1;
 	return (new_queue);
+}
+
+void free_queue(t_queue *q)
+{
+	free(q->inp_arr);
+	free(q);
 }
 
 void debug_queue(t_queue *q)
