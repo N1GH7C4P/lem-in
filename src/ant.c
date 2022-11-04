@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:04:39 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/03 16:34:03 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/04 20:09:56 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ t_ant	*new_ant(int id)
 	return (a);
 }
 
+void	free_ant(t_ant *a)
+{
+	free(a);
+}
+
 void	place_all_ants(t_graph *g)
 {
 	t_path	*p;
@@ -36,7 +41,10 @@ void	place_all_ants(t_graph *g)
 		place_ant_on_path(p, a, g);
 	}
 	while (g->ants_finished < g->ants_placed)
+	{
 		advance_ants(g);
+		ft_putendl("");
+	}
 }
 
 void	place_ant_on_path(t_path *p, t_ant *a, t_graph *g)
@@ -54,7 +62,7 @@ void	place_ant_on_path(t_path *p, t_ant *a, t_graph *g)
 
 void	advance_ants(t_graph *g)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < g->ants_placed)
@@ -72,5 +80,4 @@ void	advance_ants(t_graph *g)
 		}
 		i++;
 	}
-	ft_putendl("");
 }

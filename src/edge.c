@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/03 16:34:43 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/04 18:11:43 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 t_node	*find_neighbour(t_node *node, t_graph *graph)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < graph->nb_of_edges && graph->edges[i])
@@ -35,9 +35,14 @@ t_node	*find_neighbour(t_node *node, t_graph *graph)
 	return (NULL);
 }
 
+void	free_edge(t_edge *e)
+{
+	free(e);
+}
+
 void	print_edges(t_edge **edges)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (edges[i])

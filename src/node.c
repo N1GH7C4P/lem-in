@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:18:31 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/03 22:13:05 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/04 18:10:19 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	print_nodes(t_node **nodes, int v)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (nodes[i])
 	{
@@ -49,14 +49,16 @@ void	free_node(t_node *n)
 	free(n);
 }
 
-t_node *create_node(char *name, int ret)
+t_node	*create_node(char *name, int ret)
 {
-	t_node *new_node;
+	t_node	*new_node;
 
 	new_node = (t_node *)malloc(sizeof(t_node));
 	new_node->name = ft_strdup(name);
 	new_node->is_end = 0;
 	new_node->is_start = 0;
+	new_node->visited = 0;
+	new_node->path_id = 0;
 	if (ret == 1)
 		new_node->is_start = 1;
 	else if (ret == 2)
@@ -66,7 +68,7 @@ t_node *create_node(char *name, int ret)
 
 t_node	*get_node_by_name(char *name, t_node **nodes)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (nodes[i])

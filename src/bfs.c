@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/03 22:32:42 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/04 19:55:24 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 int	backtrack(t_node **history, t_graph *graph)
 {
 	t_node	*node;
+
 	node = graph->end;
 	graph->nb_of_paths = graph->nb_of_paths + 1;
 	node->path_id = graph->nb_of_paths;
@@ -31,15 +32,19 @@ int	backtrack(t_node **history, t_graph *graph)
 	return (1);
 }
 
-int	bfs(t_graph *graph)
+static int	free_bfs(t_node **prev, t_queue *q, int ret)
 {
-	t_queue	*q;
-	t_node	*node;
-	t_node	*neighbour;
-	t_node	**prev;
+	free_queue(q);
+	free(prev);
+	return (ret);
+}
 
+int	bfs(t_graph *graph, t_queue *q, t_node	*neighbour, t_node **prev)
+{
+	t_node	*node;
+
+	q = new_queue(graph->nb_of_nodes + 1);
 	prev = (t_node **)malloc(sizeof(t_node *) * (graph->nb_of_nodes + 1));
-	q = new_queue(graph->nb_of_nodes);
 	enqueue(q, graph->start);
 	graph->start->visited = 1;
 	while (!is_empty(q))
@@ -54,14 +59,10 @@ int	bfs(t_graph *graph)
 			if (neighbour->is_end == 1)
 			{
 				backtrack(prev, graph);
-				free_queue(q);
-				free(prev);
-				return (1);
+				return (free_bfs(prev, q, 1));
 			}
 			neighbour = find_neighbour(node, graph);
 		}
 	}
-	free(prev);
-	free_queue(q);
-	return (0);
+	return (free_bfs(prev, q, 0));
 }

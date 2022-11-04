@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 15:58:27 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/03 22:38:34 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/04 18:10:47 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 t_path	*find_optimal_path(t_graph *g)
 {
-	int i;
-	int shortest;
+	int	i;
+	int	shortest;
 	int	shortest_index;
 
 	shortest_index = -1;
 	shortest = INT_MAX;
-	i = 1;
-	while (i <= g->nb_of_paths)
+	i = 0;
+	while (g->paths[i] && i < g->nb_of_paths)
 	{
 		if (g->paths[i]->ants + g->paths[i]->path_length < shortest)
 		{
@@ -43,40 +43,36 @@ t_graph	*create_graph(void)
 	new_graph->nb_of_edges = 0;
 	new_graph->nb_of_paths = 0;
 	new_graph->ants_placed = 0;
-
+	new_graph->ants_finished = 0;
 	return (new_graph);
 }
 
 void	free_graph(t_graph *g)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (g->nodes[i])
+	while (g->nodes[i] && i < g->nb_of_nodes)
 		free_node(g->nodes[i++]);
 	free(g->nodes);
 	i = 0;
-	while (g->edges[i])
-		free(g->edges[i++]);
+	while (g->edges[i] && i < g->nb_of_edges)
+		free_edge(g->edges[i++]);
 	free(g->edges);
 	i = 0;
-	while (g->ants[i])
-		free(g->ants[i++]);
+	while (g->ants[i] && i < g->ants_finished)
+		free_ant(g->ants[i++]);
 	free(g->ants);
-	i = 1;
-	while (g->paths[i])
-	{
-		free(g->paths[i]->nodes);
-		free(g->paths[i]);
-		i++;
-	}
+	i = 0;
+	while (g->paths[i] && i < g->nb_of_paths)
+		free_path(g->paths[i++]);
 	free(g->paths);
 	free(g);
 }
 
 void	reset_visit_status(t_graph *g)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	g->start->visited = 0;

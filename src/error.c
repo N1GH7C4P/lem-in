@@ -6,14 +6,14 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 00:19:45 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/03 16:34:46 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/04 18:11:06 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include "../libft/libft.h"
 
-int validate_graph(t_graph *g)
+int	validate_graph(t_graph *g)
 {
 	if (g->nb_of_nodes < 2)
 		exit_program(-1, "invalid map");
