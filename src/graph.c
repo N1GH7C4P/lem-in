@@ -6,71 +6,32 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 15:58:27 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/27 17:00:59 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/11/04 18:10:47 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include "../libft/libft.h"
 
-t_node	*find_path(t_node *node, t_graph *graph, int path_id)
+t_path	*find_optimal_path(t_graph *g)
 {
-	int i;
+	int	i;
+	int	shortest;
+	int	shortest_index;
 
+	shortest_index = -1;
+	shortest = INT_MAX;
 	i = 0;
-	while (graph->edges[i++])
+	while (g->paths[i] && i < g->nb_of_paths)
 	{
-		// Correct start node
-		if (graph->edges[i]->start->id == node->id)
+		if (g->paths[i]->ants + g->paths[i]->path_length < shortest)
 		{
-			if (graph->edges[i]->end->path_id == path_id)
-			{
-				ft_putstr("Path found: ");
-				print_edge(graph->edges[i]);
-				ft_putendl("");
-				return (graph->edges[i]->end);
-			}
+			shortest = g->paths[i]->ants + g->paths[i]->path_length;
+			shortest_index = i;
 		}
-		else if (graph->edges[i]->end->id == node->id)
-		{
-			if (graph->edges[i]->start->path_id == path_id)
-			{
-				ft_putstr("Path found: ");
-				print_edge(graph->edges[i]);
-				ft_putendl("");
-				return (graph->edges[i]->start);
-			}
-		}
-	}
-	return (NULL);
-}
-
-int	traverse_path(t_graph *g, int path_id)
-{
-	t_node	*node;
-	t_node	*neighbour;
-
-	node = g->start;
-	neighbour = find_path(node, g, path_id);
-	while (neighbour)
-	{
-		neighbour = find_path(node, g, path_id);
-		if (neighbour->is_end)
-			return (1);
-	}
-	return (0);
-}
-
-void traverse_paths(t_graph *g)
-{
-	int i;
-
-	i = 0;
-	while (i < g->nb_of_paths)
-	{
-		traverse_path(g, i);
 		i++;
 	}
+	return (g->paths[shortest_index]);
 }
 
 t_graph	*create_graph(void)
@@ -81,13 +42,37 @@ t_graph	*create_graph(void)
 	new_graph->nb_of_nodes = 0;
 	new_graph->nb_of_edges = 0;
 	new_graph->nb_of_paths = 0;
-
+	new_graph->ants_placed = 0;
+	new_graph->ants_finished = 0;
 	return (new_graph);
+}
+
+void	free_graph(t_graph *g)
+{
+	int	i;
+
+	i = 0;
+	while (g->nodes[i] && i < g->nb_of_nodes)
+		free_node(g->nodes[i++]);
+	free(g->nodes);
+	i = 0;
+	while (g->edges[i] && i < g->nb_of_edges)
+		free_edge(g->edges[i++]);
+	free(g->edges);
+	i = 0;
+	while (g->ants[i] && i < g->ants_finished)
+		free_ant(g->ants[i++]);
+	free(g->ants);
+	i = 0;
+	while (g->paths[i] && i < g->nb_of_paths)
+		free_path(g->paths[i++]);
+	free(g->paths);
+	free(g);
 }
 
 void	reset_visit_status(t_graph *g)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	g->start->visited = 0;

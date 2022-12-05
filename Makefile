@@ -8,7 +8,7 @@ SRC_DIR					= src/
 OBJ_DIR					= src/
 TEST_DIR				= test/
 TEST_EXE				= run_test
-CC						= gcc
+CC						= clang
 CFLAGS					= -Wall -Wextra -O3 -Werror
 RM						= rm -f
 
@@ -24,7 +24,7 @@ MAGENTA = \033[0;95m
 CYAN = \033[0;96m
 WHITE = \033[0;97m
 
-LEMIN_SRC_FILES	= main graph utils node parser edge bfs queue
+LEMIN_SRC_FILES	= main graph utils node parser edge bfs queue path error ant inputs
 TEST_FILES	=	*
 
 LEMIN_SRC 	= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(LEMIN_SRC_FILES)))
@@ -56,4 +56,4 @@ fclean:			clean
 re:				fclean all
 				@echo "$(GREEN)Rebuilt all!$(DEF_COLOR)"
 			
-.PHONY:			all clean fclean re
+.PHONY:			all clean fclean rean fclean re

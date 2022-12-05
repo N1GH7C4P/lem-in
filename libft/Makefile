@@ -6,7 +6,7 @@
 #    By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/02 11:15:37 by kpolojar          #+#    #+#              #
-#    Updated: 2022/10/25 16:23:14 by kpolojar         ###   ########.fr        #
+#    Updated: 2022/09/26 13:08:05 by kpolojar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ FTS = strlen strdup strcpy strncpy strcat strncat strlcat strchr \
     putchar_fd putstr_fd putendl_fd putnbr_fd putchar putstr putendl \
     putnbr calloc lstnew foreach swap range count_if strlcpy lstdelone \
 	lstdelone lstdel lstadd lstiter lstmap countdigits strndup realloc \
-    get_next_line free_array sqrt lstrev strtoupper iswhitespace \
-	countlines
+    get_next_line free_array sqrt lstrev strtoupper iswhitespace
 
 FUNCS = $(patsubst %, ft_%, $(FTS))
 OBJ = $(patsubst %, %.o, $(FUNCS))
