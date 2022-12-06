@@ -6,12 +6,21 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:59:11 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/05 15:34:00 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:46:12 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include "../libft/libft.h"
+
+void	print_farm(t_graph *g)
+{
+	ft_putnbr(g->ants_available);
+	ft_putendl("");
+	print_nodes(g->nodes, 0);
+	print_edges(g->edges);
+	ft_putendl("");
+}
 
 void	exit_program(int ret, char *msg)
 {

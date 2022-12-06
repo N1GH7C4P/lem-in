@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:18:31 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/04 18:10:19 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:01:40 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,21 @@ void	print_nodes(t_node **nodes, int v)
 
 	i = 0;
 	while (nodes[i])
-	{
 		print_node(nodes[i++], v);
-		ft_putendl("");
-	}
 }
 
 void	print_node(t_node *node, int v)
 {
+	if (node->is_start == 1)
+		ft_putendl("##start");
+	if (node->is_end == 1)
+		ft_putendl("##end");
 	ft_putstr(node->name);
+	ft_putstr(" ");
+	ft_putnbr(node->x);
+	ft_putstr(" ");
+	ft_putnbr(node->y);
+	ft_putendl("");
 	if (v == 1)
 	{
 		ft_putstr(" visited: ");
@@ -36,10 +42,6 @@ void	print_node(t_node *node, int v)
 		ft_putnbr(node->id);
 		ft_putstr(" path_id: ");
 		ft_putnbr(node->path_id);
-		if (node->is_start == 1)
-			ft_putstr(" START");
-		if (node->is_end == 1)
-			ft_putstr(" END");
 	}
 }
 
@@ -49,7 +51,7 @@ void	free_node(t_node *n)
 	free(n);
 }
 
-t_node	*create_node(char *name, int ret)
+t_node	*create_node(char *name, int ret, int x, int y)
 {
 	t_node	*new_node;
 
@@ -59,6 +61,9 @@ t_node	*create_node(char *name, int ret)
 	new_node->is_start = 0;
 	new_node->visited = 0;
 	new_node->path_id = 0;
+	new_node->x = x;
+	new_node->y = y;
+	new_node->ant_present = 0;
 	if (ret == 1)
 		new_node->is_start = 1;
 	else if (ret == 2)

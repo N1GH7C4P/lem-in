@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/05 16:01:02 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:25:24 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,17 @@ static int check_start_end(t_node *a, t_node *b, t_graph *g)
 {
 	if ((a->is_start || a->is_end) && (b->is_end || b->is_start))
 	{
-		if (g->smallest_path)
+		//ft_putendl("Smallest path found. ");
+		if (g->smallest_path == 1)
+		{
+			//ft_putendl("...And smallest path alreaydy exists!");
 			return (1);
+		}
+		else
+		{
+			g->smallest_path = 1;
+			//ft_putendl("...And it is the first one.");
+		}
 	}
 	return (0);
 }
@@ -74,9 +83,9 @@ void	print_edges(t_edge **edges)
 
 void	print_edge(t_edge *edge)
 {
-	print_node(edge->start, 0);
-	ft_putstr(" -> ");
-	print_node(edge->end, 0);
+	ft_putstr(edge->start->name);
+	ft_putstr("-");
+	ft_putstr(edge->end->name);
 }
 
 t_edge	*create_edge(t_node *start, t_node *end)

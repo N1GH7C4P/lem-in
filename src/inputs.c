@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 19:59:36 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/04 20:06:49 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:59:49 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,39 @@ t_edge	*handle_edge(char *line, t_node **nodes)
 	return (new_edge);
 }
 
+static int count_c(char *l, char c)
+{
+	int i;
+	int count;
+
+	count = 0;
+	i = 0;
+	while(l[i])
+	{
+		if (l[i] == c)
+			count++;
+		i++;
+	}
+	return(count);
+}
+
 t_node	*handle_node(char *line, int ret, t_graph *g)
 {
 	char	**words;
 	t_node	*new_node;
+	int		x;
+	int		y;
 
+	x = 0;
+	y = 0;
 	words = ft_strsplit(line, ' ');
-	new_node = create_node(words[0], ret);
+	ft_putendl(words[0]);
+	if (count_c(ft_strtrim(line), ' ') == 2)
+	{
+		x = ft_atoi(words[1]);
+		y = ft_atoi(words[2]);
+	}
+	new_node = create_node(words[0], ret, x, y);
 	if (ret == 1)
 		g->start = new_node;
 	else if (ret == 2)

@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/05 15:39:59 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:41:28 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@
 // Data structure to store a graph node.
 typedef struct s_node
 {
+	int		x;
+	int		y;
 	int		id;
 	char	*name;
 	int		visited;
 	int		path_id;
 	int		is_start;
 	int		is_end;
+	int		ant_present;
 }	t_node;
 
 // Data structure to store a path object, made of any number of edge objects;
@@ -111,7 +114,7 @@ void	place_all_ants(t_graph *g);
 void	free_graph(t_graph *g);
 
 t_node	*find_neighbour(t_node *node, t_graph *graph);
-t_node	*create_node(char *name, int ret);
+t_node	*create_node(char *name, int ret, int x, int y);
 t_node	*get_node_by_name(char *name, t_node **nodes);
 void	print_nodes(t_node **nodes, int v);
 void	print_node(t_node *node, int v);
@@ -123,6 +126,7 @@ void	print_edge(t_edge *edge);
 void	free_edge(t_edge *e);
 
 int		validate_graph(t_graph *g);
+void	print_farm(t_graph *g);
 void	exit_program(int ret, char *msg);
 // Parser
 int		parser(t_graph *graph);
@@ -132,5 +136,8 @@ int		identify_line(char *line, int line_nb);
 int		count_lines_with_id(char **lines, int id);
 // Algorithms
 int		bfs(t_graph *graph, t_queue *q, t_node	*neighbour, t_node **prev);
+
+// Utility
+void	print_paths(t_path **p);
 
 #endif
