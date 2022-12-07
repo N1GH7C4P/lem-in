@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 15:58:27 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/04 18:10:47 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/07 19:50:18 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_graph	*create_graph(void)
 	new_graph->nb_of_paths = 0;
 	new_graph->ants_placed = 0;
 	new_graph->ants_finished = 0;
+	new_graph->lines = 0;
 	return (new_graph);
 }
 

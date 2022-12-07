@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:04:39 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/07 19:30:49 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/07 19:49:24 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	place_all_ants(t_graph *g)
 	while (g->ants_finished < g->ants_placed)
 	{
 		advance_ants(g, -1, 1);
+		g->lines++;
 		ft_putendl("");
 	}
 }

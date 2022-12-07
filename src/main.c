@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:05:00 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/07 19:32:14 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/07 19:53:01 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ int	main(void)
 	//print_paths(graph->paths);
 	place_all_ants(graph);
 	free_graph(graph);
+	//ft_putstr("lines: ");
+	//ft_putnbr(graph->lines);
+	//ft_putendl("");
 	exit_program(0, NULL);
 }

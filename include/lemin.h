@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/07 19:32:48 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/07 19:49:46 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_graph
 	int		ants_placed;
 	int		ants_finished;
 	int		smallest_path;
+	int		lines;
 
 	t_node	*start;
 	t_node	*end;

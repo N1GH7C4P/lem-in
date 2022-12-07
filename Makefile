@@ -1,6 +1,6 @@
 #Variables
 
-LEMIN					= lem-in
+NAME					= lem-in
 INCLUDE					= -I include
 LIBFT_LIB				= -L ./libft -lft
 LIBFT					= libft
@@ -8,7 +8,7 @@ SRC_DIR					= src/
 OBJ_DIR					= src/
 TEST_DIR				= test/
 TEST_EXE				= run_test
-CC						= clang
+CC						= gcc
 CFLAGS					= -Wall -Wextra -O3 -Werror
 RM						= rm -f
 
@@ -31,11 +31,11 @@ LEMIN_SRC 	= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(LEMIN_SRC_FILES)))
 LEMIN_OBJ 	= 	$(addprefix $(OBJ_DIR), $(addsuffix .o, $(LEMIN_SRC_FILES)))
 TEST 		= 	$(addprefix $(TEST_DIR), $(addsuffix .test.c, $(TEST_FILES)))
 
-all:			$(LEMIN)
+all:			$(NAME)
 
-$(LEMIN)	:	$(LEMIN_OBJ)
+$(NAME):		$(LEMIN_SRC)
 				@make -C $(LIBFT)
-				${CC} $(CFLAGS) -o $(LEMIN) $(LEMIN_OBJ) $(LIBFT_LIB) $(INCLUDE)
+				${CC} $(CFLAGS) $(INCLUDE) $(LIBFT_LIB) $(LEMIN_SRC) -o $(NAME)
 				@echo "$(GREEN)lemin compiled!$(DEF_COLOR)"
 
 
