@@ -6,28 +6,12 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:59:11 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/06 14:46:12 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/07 19:20:16 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include "../libft/libft.h"
-
-void	print_farm(t_graph *g)
-{
-	ft_putnbr(g->ants_available);
-	ft_putendl("");
-	print_nodes(g->nodes, 0);
-	print_edges(g->edges);
-	ft_putendl("");
-}
-
-void	exit_program(int ret, char *msg)
-{
-	if (msg)
-		ft_putendl(msg);
-	exit(ret);
-}
 
 int	count_nodes_with_path_id(t_graph *g, int id)
 {
@@ -74,4 +58,34 @@ int	count_lines_with_id(char **lines, int id)
 		i++;
 	}
 	return (count);
+}
+
+// Counts occurance of char c in char *l
+int	count_c(char *l, char c)
+{
+	int	i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (l[i])
+	{
+		if (l[i] == c)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+// Checks if two nodes form the smallest possible path from start to end.
+int	check_start_end(t_node *a, t_node *b, t_graph *g)
+{
+	if ((a->is_start || a->is_end) && (b->is_end || b->is_start))
+	{
+		if (g->smallest_path == 1)
+			return (1);
+		else
+			g->smallest_path = 1;
+	}
+	return (0);
 }

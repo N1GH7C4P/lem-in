@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:05:00 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/06 15:42:11 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/07 19:32:14 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(void)
 	if (graph->nb_of_paths < 1)
 		exit_program(-1, "invalid map (5)");
 	print_farm(graph);
-	print_paths(graph->paths);
+	//print_paths(graph->paths);
 	place_all_ants(graph);
 	free_graph(graph);
 	exit_program(0, NULL);

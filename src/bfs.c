@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/06 14:08:16 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/07 19:23:44 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	bfs(t_graph *graph, t_queue *q, t_node	*neighbour, t_node **prev)
 	while (!is_empty(q))
 	{
 		node = dequeue(q);
-		neighbour = find_neighbour(node, graph);
+		neighbour = find_neighbour(node, graph, 0, NULL);
 		while (neighbour)
 		{
 			neighbour->visited = 1;
@@ -64,7 +64,7 @@ int	bfs(t_graph *graph, t_queue *q, t_node	*neighbour, t_node **prev)
 				backtrack(prev, graph);
 				return (free_bfs(prev, q, 1));
 			}
-			neighbour = find_neighbour(node, graph);
+			neighbour = find_neighbour(node, graph, 0, NULL);
 		}
 	}
 	return (free_bfs(prev, q, 0));

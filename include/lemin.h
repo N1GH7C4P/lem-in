@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/06 15:41:28 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/07 19:32:48 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_queue
 	int		front;
 }	t_queue;
 
-void	advance_ants(t_graph *g);
+void	advance_ants(t_graph *g, int i, int first_ant);
 void	place_ant_on_path(t_path *p, t_ant *a, t_graph *g);
 t_ant	*new_ant(int id);
 void	free_ant(t_ant *a);
@@ -113,7 +113,7 @@ void	reset_visit_status(t_graph *g);
 void	place_all_ants(t_graph *g);
 void	free_graph(t_graph *g);
 
-t_node	*find_neighbour(t_node *node, t_graph *graph);
+t_node	*find_neighbour(t_node *node, t_graph *graph, int i, t_node *n);
 t_node	*create_node(char *name, int ret, int x, int y);
 t_node	*get_node_by_name(char *name, t_node **nodes);
 void	print_nodes(t_node **nodes, int v);
@@ -133,11 +133,16 @@ int		parser(t_graph *graph);
 void	handle_edges(char **lines, t_graph *g);
 void	handle_nodes(char **lines, t_graph *g);
 int		identify_line(char *line, int line_nb);
-int		count_lines_with_id(char **lines, int id);
+
 // Algorithms
 int		bfs(t_graph *graph, t_queue *q, t_node	*neighbour, t_node **prev);
 
 // Utility
-void	print_paths(t_path **p);
+int		count_c(char *l, char c);
+int		count_lines_with_id(char **lines, int id);
+int		check_start_end(t_node *a, t_node *b, t_graph *g);
 
+// Output
+void	print_paths(t_path **p);
+void	print_ant_movement(int ant_id, char *node_name, int first);
 #endif

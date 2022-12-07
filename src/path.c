@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 23:24:57 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/06 15:41:03 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/07 19:11:39 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_path	*new_path(int len)
 	return (p);
 }
 
-//Basic DFS
 t_path	*create_path(t_graph *g, int path_id)
 {
 	t_node	*node;
@@ -96,27 +95,6 @@ void	traverse_paths(t_graph *g)
 	while (i < g->nb_of_paths)
 	{
 		g->paths[i] = create_path(g, i + 1);
-		i++;
-	}
-}
-
-void	print_path(t_path *p)
-{
-	print_nodes(p->nodes, 0);
-}
-
-void	print_paths(t_path **p)
-{
-	int i;
-
-	i = 0;
-	while (p[i])
-	{
-		ft_putstr("path (");
-		ft_putnbr(i);
-		ft_putendl(")");
-		print_path(p[i]);
-		ft_putendl("");
 		i++;
 	}
 }

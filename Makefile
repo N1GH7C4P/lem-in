@@ -24,7 +24,7 @@ MAGENTA = \033[0;95m
 CYAN = \033[0;96m
 WHITE = \033[0;97m
 
-LEMIN_SRC_FILES	= main graph utils node parser edge bfs queue path error ant inputs
+LEMIN_SRC_FILES	= main graph utils node parser edge bfs queue path error ant input output
 TEST_FILES	=	*
 
 LEMIN_SRC 	= 	$(addprefix $(SRC_DIR), $(addsuffix .c, $(LEMIN_SRC_FILES)))
