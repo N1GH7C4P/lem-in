@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 22:27:40 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/07 19:16:35 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:40:01 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ char	**read_from_stdout(void)
 		ret = ft_get_next_line(0, &line);
 		i++;
 		if (i > MAX_LINES)
-			exit_program(-1, "invalid map (1)");
+			exit_program(-1, "invalid map");
 	}
 	if (i == 0)
-		exit_program(-1, "invalid map (2)");
+		exit_program(-1, "invalid map");
 	free(line);
 	lines[i] = NULL;
 	return (lines);

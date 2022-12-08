@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   inputs.c                                           :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 19:59:36 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/07 19:13:06 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:44:08 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,15 @@ t_node	*handle_node(char *line, int ret, t_graph *g)
 	x = 0;
 	y = 0;
 	words = ft_strsplit(line, ' ');
-	if (count_c(ft_strtrim(line), ' ') == 2)
-	{
-		x = ft_atoi(words[1]);
-		y = ft_atoi(words[2]);
-	}
+	x = ft_atoi(words[1]);
+	y = ft_atoi(words[2]);
 	new_node = create_node(words[0], ret, x, y);
 	if (ret == 1)
 		g->start = new_node;
 	else if (ret == 2)
 		g->end = new_node;
 	ft_free_array(words);
+	free(line);
 	g->nb_of_nodes = g->nb_of_nodes + 1;
 	return (new_node);
 }
