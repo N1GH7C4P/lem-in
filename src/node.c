@@ -6,23 +6,23 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:18:31 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/06 15:01:40 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:25:01 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include "../libft/libft.h"
 
-void	print_nodes(t_node **nodes, int v)
+void	print_nodes(t_node **nodes)
 {
 	int	i;
 
 	i = 0;
 	while (nodes[i])
-		print_node(nodes[i++], v);
+		print_node(nodes[i++]);
 }
 
-void	print_node(t_node *node, int v)
+void	print_node(t_node *node)
 {
 	if (node->is_start == 1)
 		ft_putendl("##start");
@@ -30,19 +30,14 @@ void	print_node(t_node *node, int v)
 		ft_putendl("##end");
 	ft_putstr(node->name);
 	ft_putstr(" ");
-	ft_putnbr(node->x);
-	ft_putstr(" ");
-	ft_putnbr(node->y);
-	ft_putendl("");
-	if (v == 1)
+	if (node->x != INT_MIN)
+		ft_putnbr(node->x);
+	if (node->y != INT_MIN)
 	{
-		ft_putstr(" visited: ");
-		ft_putnbr(node->visited);
-		ft_putstr(" id: ");
-		ft_putnbr(node->id);
-		ft_putstr(" path_id: ");
-		ft_putnbr(node->path_id);
+		ft_putstr(" ");
+		ft_putnbr(node->y);
 	}
+	ft_putendl("");
 }
 
 void	free_node(t_node *n)

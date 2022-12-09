@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 22:27:40 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/08 15:40:01 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/09 19:07:28 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char	**read_from_stdout(void)
 	}
 	if (i == 0)
 		exit_program(-1, "invalid map");
-	free(line);
 	lines[i] = NULL;
+	free(line);
 	return (lines);
 }
 

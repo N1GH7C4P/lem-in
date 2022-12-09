@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 19:06:39 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/07 19:20:24 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/09 18:24:36 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_farm(t_graph *g)
 {
 	ft_putnbr(g->ants_available);
 	ft_putendl("");
-	print_nodes(g->nodes, 0);
+	print_nodes(g->nodes);
 	print_edges(g->edges);
 	ft_putendl("");
 }
@@ -34,7 +34,7 @@ void	print_ant_movement(int ant_id, char *node_name, int first)
 
 void	print_path(t_path *p)
 {
-	print_nodes(p->nodes, 0);
+	print_nodes(p->nodes);
 }
 
 void	print_paths(t_path **p)
