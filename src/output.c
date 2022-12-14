@@ -6,12 +6,11 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 19:06:39 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/09 18:24:36 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:51:45 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include "../include/libft.h"
 
 void	print_farm(t_graph *g)
 {
@@ -55,7 +54,9 @@ void	print_paths(t_path **p)
 
 void	exit_program(int ret, char *msg)
 {
-	if (msg)
-		ft_putendl(msg);
+	if (msg && DESCRIPTIVE_MSGS == 1)
+		ft_putendl_fd(msg, 2);
+	else if(ret == -1)
+		ft_putendl_fd("Error", 2);
 	exit(ret);
 }

@@ -6,12 +6,11 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/07 19:22:17 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:47:48 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include "../libft/libft.h"
 
 t_node	*find_neighbour(t_node *node, t_graph *graph, int i, t_node *n)
 {

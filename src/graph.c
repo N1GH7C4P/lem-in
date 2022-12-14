@@ -6,12 +6,11 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 15:58:27 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/07 19:50:18 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:47:54 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include "../libft/libft.h"
 
 t_path	*find_optimal_path(t_graph *g)
 {

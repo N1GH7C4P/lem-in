@@ -6,12 +6,11 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 22:27:40 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/09 19:07:28 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:48:07 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include "../libft/libft.h"
 
 char	**read_from_stdout(void)
 {

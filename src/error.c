@@ -6,12 +6,11 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 00:19:45 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/09 18:01:04 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:47:51 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include "../libft/libft.h"
 
 int	validate_graph(t_graph *g)
 {

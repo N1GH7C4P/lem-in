@@ -6,12 +6,11 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:04:39 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/07 19:49:24 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:47:36 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include "../libft/libft.h"
 
 t_ant	*new_ant(int id)
 {

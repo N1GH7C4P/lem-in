@@ -6,17 +6,19 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/09 18:24:15 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:46:52 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEMIN_H
 # define LEMIN_H
 
+# define DESCRIPTIVE_MSGS 1
 # define MAX_LINES 30000
 # define QUEUE_MAX 30000
 # include <unistd.h>
 # include <stdio.h>
+# include "../libft/libft.h"
 
 // Data structure to store a graph node.
 typedef struct s_node

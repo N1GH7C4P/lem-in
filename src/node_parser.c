@@ -6,12 +6,11 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 19:04:39 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/09 19:09:04 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:49:11 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include "../libft/libft.h"
 
 static int	handle_comments(char *line)
 {
@@ -24,11 +23,16 @@ static int	handle_comments(char *line)
 
 static int validate_line(char *line)
 {
-	int words;
+	char	**words;
+	int		i;
 
-	words = ft_countwords(line, ' ');
-	if (words != 3)
-		exit_program(-1, "Invalid room.");
+	words = ft_strsplit(line, ' ');
+	i = 0;
+	while (words[i])
+		i++;
+	ft_free_array(words);
+	if (i != 3)
+		exit_program(-1, "Wrong number of words in room desriptor.");
 	return (1);
 }
 
@@ -42,7 +46,7 @@ static int parse_coordinate(char *coord)
 	while (coord[i])
 	{
 		if (!ft_isdigit(coord[i]))
-			exit_program(-1, "Invalid coordinate.");
+			exit_program(-1, "Coordinate descriptor contains a non digit character.");
 		i++;
 	}
 	return (ft_atoi(coord));
@@ -58,7 +62,7 @@ t_node	*handle_node(char *line, int ret, t_graph *g)
 	x = 0;
 	y = 0;
 	if (line[0] == 'L' || line[0] == '#')
-		exit_program(-1, "Error");
+		exit_program(-1, "Illegal hashtag or L in node name.");
 	validate_line(line);
 	words = ft_strsplit(line, ' ');
 	x = parse_coordinate(words[1]);

@@ -6,12 +6,11 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:54:13 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/04 18:02:46 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:48:13 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include "../libft/libft.h"
 
 t_queue	*new_queue(size_t n)
 {

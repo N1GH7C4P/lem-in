@@ -49,9 +49,10 @@ clean:
 				@echo "$(BLUE)libft object files cleaned!$(DEF_COLOR)"
 
 fclean:			clean
-				@$(RM) -f $(LEMIN)
+				@$(RM) -f $(NAME)
 				@echo "$(CYAN)lemin binary files cleaned!$(DEF_COLOR)"
 				@make clean -C $(LIBFT)
+				@$(RM) -f $(LIBFT)/libft.a
 				@echo "$(CYAN)libft binary files cleaned!$(DEF_COLOR)"
 
 re:				fclean all
