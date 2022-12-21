@@ -12,7 +12,11 @@ function Polygonize_coordinates()
 	end
 end
 function love.load()
+	--love.mouse.setRelativeMode(true)
 	love.window.setFullscreen(true)
+	love.mouse.setVisible(true)
+	WINDOW = {translate={x=0, y=0}, zoom=1}
+	DSCALE = 2^(1/6) -- six times wheel movement changes the zoom twice; exponential zoom only
 	ANT_SCALING = 0.3
 	ROOM_RADIUS = 10
 	X_SCALING = 30
@@ -24,6 +28,7 @@ function love.load()
 	COUNT = 0
 	POLYGON_COORDINATES = 1
 	USING_ALT_COORDS = 0
+	IS_FULLSCREEN = true
 
 	ANTFARM = {}
 	ANTFARM.rooms = {}
@@ -40,11 +45,14 @@ function love.load()
 	ANT_IMG = love.graphics.newImage("img/ant.png")
 	local lines = love.filesystem.lines("visualize_me.output")
 	Parse_lines(lines)
-	POLYGON = RegularPoly(1200, 800, ANTFARM.nb_of_rooms, 100 + ANTFARM.nb_of_rooms * 2)
+	POLYGON = RegularPoly(1200, 800, ANTFARM.nb_of_rooms, 100 + ANTFARM.nb_of_rooms * 3)
 	Polygonize_coordinates()
 end
 
 function love.draw()
+	love.graphics.translate(WINDOW.translate.x, WINDOW.translate.y)
+	love.graphics.scale(WINDOW.zoom)
+	love.graphics.setColor(1, 1, 1, 0.5)
 	Draw_tubes()
 	Draw_rooms()
 	Draw_start_ants()
@@ -52,17 +60,34 @@ function love.draw()
 		Draw_moves()
 	end
 end
+function love.keypressed(key, scancode, isrepeat)
+	if key == "escape" then
+		love.event.quit()
+	end
+end
+
+function love.wheelmoved(x, y)
+	local mx = love.mouse.getX()
+	local my = love.mouse.getY()
+    if not (y == 0) then -- mouse wheel moved up or down
+--		zoom in to point or zoom out of point
+		local mouse_x = mx - WINDOW.translate.x
+		local mouse_y = my - WINDOW.translate.y
+		local k = DSCALE^y
+		WINDOW.zoom = WINDOW.zoom*k
+		WINDOW.translate.x = math.floor(WINDOW.translate.x + mouse_x*(1-k))
+		WINDOW.translate.y = math.floor(WINDOW.translate.y + mouse_y*(1-k))
+	else
+--		print ('wheel x: ' .. x .. ' y: ' .. y)
+    end
+end
+
 
 function love.update(dt)
-
 	COUNT = COUNT + dt
 	DTOTAL = DTOTAL + dt
 	if (CLICK_MODE == 1) then
-		function love.keypressed(key, scancode, isrepeat)
-			if key == "escape" then
-				love.event.quit()
-			end
-		end
+		
 		function love.mousepressed(x, y, button, istouch)
 			if button == 1 then
 				if (CURRENT_ROUND < ANTFARM.nb_rounds_of_moves - 1) then
