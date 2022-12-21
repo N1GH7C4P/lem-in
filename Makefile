@@ -57,5 +57,8 @@ fclean:			clean
 
 re:				fclean all
 				@echo "$(GREEN)Rebuilt all!$(DEF_COLOR)"
+
+visualize:		all
+				sh ./visualizer/run_visualizer.sh
 			
 .PHONY:			all clean fclean rean fclean re

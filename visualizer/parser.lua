@@ -6,6 +6,7 @@ function Parse_room(line)
 		room.name = words[0]
 		room.x = words[1] * X_SCALING
 		room.y = words[2] * Y_SCALING
+		room.color = {0, 0.3, 0, 1}
 		return room
 	end
 	return nil
@@ -46,6 +47,7 @@ function Parse_lines(lines)
 	for line in lines do
 		if i == 0 then
 			ANTFARM.nb_of_ants = line * 1
+			ANTFARM.ants_at_start = ANTFARM.nb_of_ants
 		elseif string.find(line, "##start") then
 			next_start = 1
 		elseif string.find(line, "##end") then
@@ -63,9 +65,11 @@ function Parse_lines(lines)
 			if ANTFARM.rooms[ANTFARM.nb_of_rooms] then
 				if next_start == 1 then
 					ANTFARM.start_room = ANTFARM.rooms[ANTFARM.nb_of_rooms]
+					ANTFARM.rooms[ANTFARM.nb_of_rooms].color = {0.3, 0, 0, 1}
 					next_start = 0
 				elseif next_end == 1 then
 					ANTFARM.end_room = ANTFARM.rooms[ANTFARM.nb_of_rooms]
+					ANTFARM.rooms[ANTFARM.nb_of_rooms].color = {0, 0, 0.3, 1}
 					next_end = 0
 				end
 				ANTFARM.nb_of_rooms = ANTFARM.nb_of_rooms + 1
