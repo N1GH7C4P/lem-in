@@ -1,3 +1,4 @@
+Color = require("color")
 function Split (inputstr, sep)
 	if sep == nil then
 			sep = "%s"
@@ -9,6 +10,65 @@ function Split (inputstr, sep)
 		i = i + 1
 	end
 	return t
+end
+
+function Give_rooms_color()
+	local i = 0
+	local j
+	while ANTFARM.rooms[i] do
+		if ANTFARM.rooms[i] == ANTFARM.end_room then
+			print("end room: ", ANTFARM.rooms[i].name)
+			ANTFARM.rooms[i].color = END_ROOM_COLOR
+		else
+			j = 0
+			print("room_name: ", ANTFARM.rooms[i].name, "path_id: ", ANTFARM.rooms[i].path_id)
+			for k, v in pairs(Color) do
+				if j == tonumber(ANTFARM.rooms[i].path_id) then
+					ANTFARM.rooms[i].color = v
+					print("color: ", k)
+				end
+				j = j + 1
+			end
+		end
+		i = i + 1
+	end
+end
+
+function Give_tubes_color()
+	local i = 0
+	while ANTFARM.tubes[i] do
+		local t = ANTFARM.tubes[i]
+		if t.tube_end.color then
+			--print("tube end color: ",t.tube_end.color)
+			if t.tube_start.color == t.tube_end.color or ANTFARM.start_room == ANTFARM.tubes[i].tube_start or ANTFARM.end_room == t.tube_start then
+				t.color = t.tube_end.color
+			end
+		end
+		if t.tube_start.color then
+			if t.tube_end.color == t.tube_start.color or ANTFARM.end_room == t.tube_end then
+				t.color = t.tube_start.color
+			end
+		end
+		i = i + 1
+	end
+end
+
+function Mark_paths()
+	local i;
+	local j;
+
+	i = 0
+	while i < ANTFARM.nb_rounds_of_moves do
+		j = 0
+		while ANTFARM.rounds_of_moves[i][j] do
+			if not ANTFARM.rounds_of_moves[i][j].room.path_id then
+				print("room: ", ANTFARM.rounds_of_moves[i][j].room.name, "id: ", ANTFARM.rounds_of_moves[i][j].ant_id)
+				ANTFARM.rounds_of_moves[i][j].room.path_id = ANTFARM.rounds_of_moves[i][j].ant_id
+			end
+			j = j + 1
+		end
+		i = i + 1
+	end
 end
 
 local function Get_room_by_round_and_ant_id(round_nb, ant_id)

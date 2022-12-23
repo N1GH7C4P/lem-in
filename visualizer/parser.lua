@@ -6,7 +6,6 @@ function Parse_room(line)
 		room.name = words[0]
 		room.x = words[1] * X_SCALING
 		room.y = words[2] * Y_SCALING
-		room.color = {0, 0.3, 0, 1}
 		return room
 	end
 	return nil

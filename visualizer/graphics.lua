@@ -21,18 +21,26 @@ function Animate_ant(x1, y1, x2, y2)
 end
 
 local function draw_room(x, y, name, color)
-	love.graphics.setColor(color)
+	if color then
+		love.graphics.setColor(color)
+	else
+		love.graphics.setColor(DEFAULT_ROOM_COLOR)
+	end
 	love.graphics.circle("fill", x, y, ROOM_RADIUS)
 	love.graphics.setColor(1,1,1,1)
 	love.graphics.circle("line", x, y, ROOM_RADIUS)
-	love.graphics.print(name, x, y)
+	love.graphics.setColor(TEXT_COLOR)
+	love.graphics.print(name, x + ROOM_TEXT_OFFSET_X, y + ROOM_TEXT_OFFSET_Y)
 	if name == ANTFARM.start_room.name then
-		love.graphics.print("START", x, y + 20)
-		love.graphics.print(ANTFARM.ants_at_start, x, y + 32)
+		love.graphics.print("START", x, y + MSG_OFFSET)
+		love.graphics.print(ANTFARM.ants_at_start, x, y + MSG_OFFSET + 12)
+		local msg = "ROUND: " .. CURRENT_ROUND + 1
+		love.graphics.print(msg, x, y + MSG_OFFSET + 24)
 	elseif name == ANTFARM.end_room.name then
-		love.graphics.print("END", x, y + 20)
-		love.graphics.print(ANTFARM.ants_at_end, x, y + 32)
+		love.graphics.print("END", x, y + MSG_OFFSET)
+		love.graphics.print(ANTFARM.ants_at_end, x, y + MSG_OFFSET + 12)
 	end
+	love.graphics.setColor(1,1,1,1)
 end
 function Draw_rooms()
 	local i = 0
@@ -46,18 +54,26 @@ function Draw_rooms()
 	end
 end
 
-local function draw_tube(x1, y1, x2, y2, color)
-	love.graphics.setColor(color)
-	love.graphics.line(x1, y1, x2, y2)
+local function draw_tube(tube)
+	if tube.color then
+		love.graphics.setColor(tube.color)
+	else
+		love.graphics.setColor(DEFAULT_TUBE_COLOR)
+	end
+	if USING_ALT_COORDS == 1 then
+		love.graphics.line(tube.tube_start.alt_x, tube.tube_start.alt_y, tube.tube_end.alt_x, tube.tube_end.alt_y)
+	else
+		love.graphics.line(tube.tube_start.x, tube.tube_start.y, tube.tube_end.x, tube.tube_end.y)
+	end
 end
 
 function Draw_tubes()
 	local i = 0
 	while i < ANTFARM.nb_of_tubes - 1 do
 		if USING_ALT_COORDS == 1 then
-			draw_tube(ANTFARM.tubes[i].tube_start.alt_x, ANTFARM.tubes[i].tube_start.alt_y, ANTFARM.tubes[i].tube_end.alt_x, ANTFARM.tubes[i].tube_end.alt_y, {1, 1, 1, 1})
+			draw_tube(ANTFARM.tubes[i])
 		else
-			draw_tube(ANTFARM.tubes[i].tube_start.x, ANTFARM.tubes[i].tube_start.y, ANTFARM.tubes[i].tube_end.x, ANTFARM.tubes[i].tube_end.y, {1, 1, 1, 1})
+			draw_tube(ANTFARM.tubes[i])
 		end
 		i = i + 1
 	end
