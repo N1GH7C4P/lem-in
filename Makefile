@@ -60,5 +60,7 @@ re:				fclean all
 
 visualize:		all
 				sh ./visualizer/run_visualizer.sh
+visualize_rand:	all
+				sh ./visualizer/visualize_random.sh
 			
 .PHONY:			all clean fclean rean fclean re

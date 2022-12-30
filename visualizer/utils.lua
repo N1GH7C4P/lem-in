@@ -17,15 +17,15 @@ function Give_rooms_color()
 	local j
 	while ANTFARM.rooms[i] do
 		if ANTFARM.rooms[i] == ANTFARM.end_room then
-			print("end room: ", ANTFARM.rooms[i].name)
+			--print("end room: ", ANTFARM.rooms[i].name)
 			ANTFARM.rooms[i].color = END_ROOM_COLOR
 		else
 			j = 0
-			print("room_name: ", ANTFARM.rooms[i].name, "path_id: ", ANTFARM.rooms[i].path_id)
+			--print("room_name: ", ANTFARM.rooms[i].name, "path_id: ", ANTFARM.rooms[i].path_id)
 			for k, v in pairs(Color) do
 				if j == tonumber(ANTFARM.rooms[i].path_id) then
 					ANTFARM.rooms[i].color = v
-					print("color: ", k)
+					--print("color: ", k)
 				end
 				j = j + 1
 			end
@@ -62,7 +62,7 @@ function Mark_paths()
 		j = 0
 		while ANTFARM.rounds_of_moves[i][j] do
 			if not ANTFARM.rounds_of_moves[i][j].room.path_id then
-				print("room: ", ANTFARM.rounds_of_moves[i][j].room.name, "id: ", ANTFARM.rounds_of_moves[i][j].ant_id)
+				--print("room: ", ANTFARM.rounds_of_moves[i][j].room.name, "id: ", ANTFARM.rounds_of_moves[i][j].ant_id)
 				ANTFARM.rounds_of_moves[i][j].room.path_id = ANTFARM.rounds_of_moves[i][j].ant_id
 			end
 			j = j + 1

@@ -34,8 +34,6 @@ local function draw_room(x, y, name, color)
 	if name == ANTFARM.start_room.name then
 		love.graphics.print("START", x, y + MSG_OFFSET)
 		love.graphics.print(ANTFARM.ants_at_start, x, y + MSG_OFFSET + 12)
-		local msg = "ROUND: " .. CURRENT_ROUND + 1
-		love.graphics.print(msg, x, y + MSG_OFFSET + 24)
 	elseif name == ANTFARM.end_room.name then
 		love.graphics.print("END", x, y + MSG_OFFSET)
 		love.graphics.print(ANTFARM.ants_at_end, x, y + MSG_OFFSET + 12)
@@ -114,4 +112,18 @@ function Update_moves(round_of_moves, update_count)
 		--love.graphics.print(round_of_moves[i].ant_id, round_of_moves[i].room.x + 50, round_of_moves[i].room.y)
 		i = i + 1
 	end
+end
+
+function Draw_overlay()
+	local msg = "ROUND: " .. CURRENT_ROUND + 1 .. " / "..ANTFARM.nb_rounds_of_moves.."\nZOOM:".. WINDOW.zoom .. "\nTRANSLATE_X: " .. WINDOW.translate.x .. "\nTRANSLATE_Y: " .. WINDOW.translate.y .. "\nANTS AT START: " .. ANTFARM.ants_at_start .. "\nANTS ON PATH: " .. ANTFARM.nb_of_ants - (ANTFARM.ants_at_end + ANTFARM.ants_at_start) .. "\nANTS FINISHED: " .. ANTFARM.ants_at_end
+	local controls = "CONTROLS:\n\nadvance ants:\nchange projection:\nzoom:\nnavigate view:\nreset simulation:\nexit proggram:\nreset navigation:"
+	local keys = "\n\nleft mouse button\nright mouse button\nscroll mouse wheel\nhold mouse wheel and move mouse\nr\nescape key\nspace bar"
+
+	local w = love.graphics.getWidth()
+	local h = love.graphics.getHeight()
+
+	love.graphics.setFont(OVERLAY_FONT)
+	love.graphics.print(msg, 20, 20)
+	love.graphics.print(controls, 20, h - 250)
+	love.graphics.print(keys, 220, h - 250)
 end

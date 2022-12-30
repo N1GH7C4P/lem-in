@@ -10,3 +10,11 @@ function RegularPoly(x, y, n, r)
 	end
 	return out
 end
+function Polygonize_coordinates()
+	local i = 0
+	while ANTFARM.rooms[i] do
+		ANTFARM.rooms[i].alt_x = POLYGON[i].x
+		ANTFARM.rooms[i].alt_y = POLYGON[i].y
+		i = i + 1
+	end
+end
