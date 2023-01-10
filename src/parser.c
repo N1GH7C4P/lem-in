@@ -6,29 +6,49 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 22:27:40 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/24 00:01:28 by kpolojar         ###   ########.fr       */
+/*   Updated: 2022/12/14 17:48:07 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
-#include "../libft/libft.h"
 
-int parser(int argc, char** argv, static int vertices[N + 1])
+char	**read_from_stdout(void)
 {
+	int		ret;
 	int		i;
-	int		j;
-	int		nodes;
 	char	*line;
+	char	**lines;
 
-	if (argc != 2)
-		return ;
-	char **lines = ft_split(argv, "\n");
-	while(lines[i])
+	i = 0;
+	line = NULL;
+	lines = (char **)malloc(sizeof(char *) * (MAX_LINES + 1));
+	ret = ft_get_next_line(0, &line);
+	while (ret)
 	{
-		if (!ft_strcmp("##start"))
-		{
-			line = lines[++i];
-			while (line)
-		}
+		lines[i] = ft_strdup(line);
+		free(line);
+		ret = ft_get_next_line(0, &line);
+		i++;
+		if (i > MAX_LINES)
+			exit_program(-1, "invalid map");
 	}
+	if (i == 0)
+		exit_program(-1, "invalid map");
+	lines[i] = NULL;
+	free(line);
+	return (lines);
+}
+
+int	parser(t_graph *g)
+{
+	char	**lines;
+
+	lines = read_from_stdout();
+	g->ants_available = ft_atoi(lines[0]);
+	g->ants = (t_ant **)malloc(sizeof(t_ant *) * (g->ants_available + 1));
+	g->ants[g->ants_available] = NULL;
+	handle_nodes(lines, g);
+	handle_edges(lines, g);
+	ft_free_array(lines);
+	return (0);
 }

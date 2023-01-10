@@ -5,106 +5,84 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/23 22:13:55 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/10/23 23:35:46 by kpolojar         ###   ########.fr       */
+/*   Created: 2022/10/25 15:58:27 by kpolojar          #+#    #+#             */
+/*   Updated: 2022/12/14 17:47:54 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../include/lemin.h"
-#include "../libft/libft.h"
 
-// Function to create an adjacency list from specified edges
+t_path	*find_optimal_path(t_graph *g)
+{
+	int	i;
+	int	shortest;
+	int	shortest_index;
 
-// Function to create Adjacency Matrix
-void createAdjMatrix(int Adj[][N + 1],
-                     int arr[][2], int M)
-{
-  
-    // Initialise all value to this
-    // Adjacency list to zero
-    for (int i = 0; i < N + 1; i++) {
-  
-        for (int j = 0; j < N + 1; j++) {
-            Adj[i][j] = 0;
-        }
-    }
-  
-    // Traverse the array of Edges
-    for (int i = 0; i < M; i++) {
-  
-        // Find X and Y of Edges
-        int x = arr[i][0];
-        int y = arr[i][1];
-  
-        // Update value to 1
-        Adj[x][y] = 1;
-        Adj[y][x] = 1;
-    }
-}
-  
-// Function to print the created
-// Adjacency Matrix
-void printAdjMatrix(int Adj[][N + 1])
-{
-  
-    // Traverse the Adj[][]
-    for (int i = 1; i < N + 1; i++) {
-        for (int j = 1; j < N + 1; j++) {
-  
-            // Print the value at Adj[i][j]
-            ft_putnbr(Adj[i][j]);
-        }
-        ft_putendl("");
-    }
+	shortest_index = -1;
+	shortest = INT_MAX;
+	i = 0;
+	while (g->paths[i] && i < g->nb_of_paths)
+	{
+		if (g->paths[i]->ants + g->paths[i]->path_length < shortest)
+		{
+			shortest = g->paths[i]->ants + g->paths[i]->path_length;
+			shortest_index = i;
+		}
+		i++;
+	}
+	return (g->paths[shortest_index]);
 }
 
-
-t_graph* createGraph(t_edge edges[], int n, char **names)
+t_graph	*create_graph(void)
 {
-    // allocate storage for the graph data structure
-    t_graph* graph = (t_graph *)malloc(sizeof(t_graph));
- 
-    // initialize head pointer for all vertices
-    for (int i = 0; i < N; i++) {
-        graph->head[i] = NULL;
-    }
- 
-    // add edges to the directed graph one by one
-    for (int i = 0; i < n; i++)
-    {
-        // get the source and destination vertex
+	t_graph	*new_graph;
 
-        // allocate a new node of adjacency list from src to dest
-        t_node* newNode = (t_node*)malloc(sizeof(t_node));
-        newNode->dest = edges[i].dest;
-		newNode->name = ft_strdup(names[i + 1]);
-
-        // point new node to the current head
-        newNode->next = graph->head[edges[i].src];
- 
-        // point head pointer to the new node
-        graph->head[edges[i].src] = newNode;
-    }
- 
-    return graph;
+	new_graph = (t_graph *)malloc(sizeof(t_graph));
+	new_graph->nb_of_nodes = 0;
+	new_graph->nb_of_edges = 0;
+	new_graph->nb_of_paths = 0;
+	new_graph->ants_placed = 0;
+	new_graph->ants_finished = 0;
+	new_graph->lines = 0;
+	return (new_graph);
 }
- 
-// Function to print adjacency list representation of a graph
-void printGraph(t_graph* graph)
+
+void	free_graph(t_graph *g)
 {
-    for (int i = 0; i < N; i++)
-    {
-        // print current vertex and all its neighbors
-       t_node* ptr = graph->head[i];
-        while (ptr != NULL)
-        {
-			ft_putendl(ptr->name);
-            ft_putnbr(i);
-			ft_putstr(" -> ");
-			ft_putnbr(ptr->dest);
-			ft_putendl("");
-            ptr = ptr->next;
-        }
-    }
+	int	i;
+
+	i = 0;
+	while (g->nodes[i] && i < g->nb_of_nodes)
+		free_node(g->nodes[i++]);
+	free(g->nodes);
+	i = 0;
+	while (g->edges[i] && i < g->nb_of_edges)
+		free_edge(g->edges[i++]);
+	free(g->edges);
+	i = 0;
+	while (g->ants[i] && i < g->ants_finished)
+		free_ant(g->ants[i++]);
+	free(g->ants);
+	i = 0;
+	while (g->paths[i] && i < g->nb_of_paths)
+		free_path(g->paths[i++]);
+	free(g->paths);
+	free(g);
+}
+
+void	reset_visit_status(t_graph *g)
+{
+	int	i;
+
+	i = 0;
+	g->start->visited = 0;
+	g->end->visited = 0;
+	while (g->edges[i])
+	{
+		if (g->edges[i]->start->visited == 1)
+			g->edges[i]->start->visited = 0;
+		if (g->edges[i]->end->visited == 1)
+			g->edges[i]->end->visited = 0;
+		i++;
+	}
 }
