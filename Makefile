@@ -59,8 +59,8 @@ re:				fclean all
 				@echo "$(GREEN)Rebuilt all!$(DEF_COLOR)"
 
 visualize:		all
-				sh ./visualizer/run_visualizer.sh
+				sh ./lem-in_visualizer/run_visualizer.sh
 visualize_rand:	all
-				sh ./visualizer/visualize_random.sh
+				sh ./lem-in_visualizer/visualize_random.sh
 			
 .PHONY:			all clean fclean rean fclean re
