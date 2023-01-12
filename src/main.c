@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:05:00 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/14 18:59:48 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:24:58 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@ int	main(void)
 		i = bfs(graph, NULL, NULL, NULL);
 	traverse_paths(graph);
 	if (graph->nb_of_paths < 1)
-		exit_program(-1, "invalid map");
+		exit_program(-1, "invalid map (5)");
 	print_farm(graph);
-	//print_paths(graph->paths);
+	print_paths(graph->paths, 0);
+	//ft_putstr("nb of paths: ");
+	//ft_putnbr(graph->nb_of_paths);
+	//ft_putendl("");
 	place_all_ants(graph);
 	free_graph(graph);
-	//ft_putstr("lines: ");
-	//ft_putnbr(graph->lines);
-	//ft_putendl("");
+	//print_paths(graph->paths, 1);
 	exit_program(0, NULL);
 }

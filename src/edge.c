@@ -6,11 +6,48 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/14 17:47:48 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:53:15 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
+
+/*
+t_node	*find_neighbour(t_node *node, t_graph *graph, int i)
+{
+	ft_putendl("finding neighbour (X)");
+	print_node(node);
+	i = 0;
+	while (i < graph->nb_of_nodes - 1)
+	{
+		ft_putnbr(i);
+		ft_putendl("");
+		if (graph->adj_matrix[node->id][i] == 1 && node->id != i)
+		{
+			ft_putendl("neighbour found: ");
+			print_node(graph->nodes[i]);
+			return (graph->nodes[i]);
+		}
+		i++;
+	}
+	ft_putendl("finding neighbour (Y)");
+	i = 0;
+	while (i < graph->nb_of_nodes - 1)
+	{
+		ft_putnbr(i);
+		ft_putendl("");
+		if (graph->adj_matrix[i][node->id] == 1 && node->id != i)
+		{
+			ft_putendl("neighbour found: ");
+			print_node(graph->nodes[i]);
+			return (graph->nodes[i]);
+		}
+		i++;
+	}
+	ft_putendl("returning null");
+	return (NULL);
+}
+*/
 
 t_node	*find_neighbour(t_node *node, t_graph *graph, int i, t_node *n)
 {

@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:18:31 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/14 17:48:02 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:50:03 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@ void	print_node(t_node *node)
 		ft_putendl("##start");
 	if (node->is_end == 1)
 		ft_putendl("##end");
+	ft_putstr("name: ");
 	ft_putstr(node->name);
-	ft_putstr(" ");
+	ft_putstr(" id: ");
+	ft_putnbr(node->id);
+	ft_putendl("");
 	if (node->x != INT_MIN)
 		ft_putnbr(node->x);
 	if (node->y != INT_MIN)

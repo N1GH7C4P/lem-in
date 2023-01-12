@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/14 17:46:52 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:53:34 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define DESCRIPTIVE_MSGS 1
 # define MAX_LINES 30000
 # define QUEUE_MAX 30000
+# define MAX_NODES 2000
 # include <unistd.h>
 # include <stdio.h>
 # include "../libft/libft.h"
@@ -68,6 +69,7 @@ typedef struct s_graph
 	int		ants_finished;
 	int		smallest_path;
 	int		lines;
+	int		adj_matrix[MAX_NODES][MAX_NODES];
 
 	t_node	*start;
 	t_node	*end;
@@ -146,6 +148,6 @@ int		count_lines_with_id(char **lines, int id);
 int		check_start_end(t_node *a, t_node *b, t_graph *g);
 
 // Output
-void	print_paths(t_path **p);
+void	print_paths(t_path **p, int length_mode);
 void	print_ant_movement(int ant_id, char *node_name, int first);
 #endif

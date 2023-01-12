@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 19:06:39 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/14 17:51:45 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:32:26 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_path(t_path *p)
 	print_nodes(p->nodes);
 }
 
-void	print_paths(t_path **p)
+void	print_paths(t_path **p, int length_mode)
 {
 	int	i;
 
@@ -46,7 +46,13 @@ void	print_paths(t_path **p)
 		ft_putstr("path (");
 		ft_putnbr(i);
 		ft_putendl(")");
-		print_path(p[i]);
+		if (length_mode)
+		{
+			ft_putstr("path len: ");
+			ft_putnbr(p[i]->path_length);
+		}
+		else
+			print_path(p[i]);
 		ft_putendl("");
 		i++;
 	}
