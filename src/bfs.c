@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/12 16:53:51 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:43:22 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	backtrack(t_node **history, t_graph *graph)
 		if (node->is_end && history[node->id]->is_start)
 			if (!graph->smallest_path)
 				graph->smallest_path = 1;
-		graph->adj_matrix[node->id][history[node->id]->id] = 2;
-		//graph->adj_matrix[history[node->id]->id][node->id] = 3;
+		graph->adj_matrix[node->id][history[node->id]->id] += 1;
+		graph->adj_matrix[history[node->id]->id][node->id] -= 1;
 		node = history[node->id];
 		node->path_id = graph->nb_of_paths;
 		node->visited = 2;
@@ -54,7 +54,7 @@ int	bfs(t_graph *graph, t_queue *q, t_node	*neighbour, t_node **prev)
 	while (!is_empty(q))
 	{
 		node = dequeue(q);
-		neighbour = find_neighbour(node, graph, 0, NULL);
+		neighbour = find_neighbour(node, graph);
 		while (neighbour)
 		{
 			neighbour->visited = 1;
@@ -65,7 +65,7 @@ int	bfs(t_graph *graph, t_queue *q, t_node	*neighbour, t_node **prev)
 				backtrack(prev, graph);
 				return (free_bfs(prev, q, 1));
 			}
-			neighbour = find_neighbour(node, graph, 0, NULL);
+			neighbour = find_neighbour(node, graph);
 		}
 	}
 	return (free_bfs(prev, q, 0));

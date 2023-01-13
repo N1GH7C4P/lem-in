@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/12 16:53:34 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:49:48 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	reset_visit_status(t_graph *g);
 void	place_all_ants(t_graph *g);
 void	free_graph(t_graph *g);
 
-t_node	*find_neighbour(t_node *node, t_graph *graph, int i, t_node *n);
+t_node	*find_neighbour(t_node *node, t_graph *graph);
 t_node	*create_node(char *name, int ret, int x, int y);
 t_node	*get_node_by_name(char *name, t_node **nodes);
 void	print_nodes(t_node **nodes);
@@ -150,4 +150,5 @@ int		check_start_end(t_node *a, t_node *b, t_graph *g);
 // Output
 void	print_paths(t_path **p, int length_mode);
 void	print_ant_movement(int ant_id, char *node_name, int first);
+void	print_adj_matrix(t_graph *g);
 #endif

@@ -6,13 +6,13 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 19:59:36 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/12 16:38:43 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:44:30 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 
-static void	print_adj_matrix(t_graph *g)
+void	print_adj_matrix(t_graph *g)
 {
 	int i;
 	int j;
@@ -23,11 +23,13 @@ static void	print_adj_matrix(t_graph *g)
 		j = 0;
 		while (j < g->nb_of_nodes)
 		{
+			if (g->adj_matrix[i][j] > -1)
+				ft_putchar('+');
 			ft_putnbr(g->adj_matrix[i][j]);
-			ft_putchar(' ');
+			ft_putstr("  ");
 			j++;
 		}
-		ft_putendl("");
+		ft_putendl("\n");
 		i++;
 	}
 }
@@ -90,5 +92,4 @@ void	handle_edges(char **lines, t_graph *g)
 	}
 	g->edges[edges_processed] = NULL;
 	g->nb_of_edges = edges_processed;
-	print_adj_matrix(g);
 }

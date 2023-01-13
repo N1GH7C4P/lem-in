@@ -6,70 +6,25 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/12 16:53:15 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:48:31 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 
-/*
-t_node	*find_neighbour(t_node *node, t_graph *graph, int i)
+t_node	*find_neighbour(t_node *node, t_graph *g)
 {
-	ft_putendl("finding neighbour (X)");
-	print_node(node);
-	i = 0;
-	while (i < graph->nb_of_nodes - 1)
-	{
-		ft_putnbr(i);
-		ft_putendl("");
-		if (graph->adj_matrix[node->id][i] == 1 && node->id != i)
-		{
-			ft_putendl("neighbour found: ");
-			print_node(graph->nodes[i]);
-			return (graph->nodes[i]);
-		}
-		i++;
-	}
-	ft_putendl("finding neighbour (Y)");
-	i = 0;
-	while (i < graph->nb_of_nodes - 1)
-	{
-		ft_putnbr(i);
-		ft_putendl("");
-		if (graph->adj_matrix[i][node->id] == 1 && node->id != i)
-		{
-			ft_putendl("neighbour found: ");
-			print_node(graph->nodes[i]);
-			return (graph->nodes[i]);
-		}
-		i++;
-	}
-	ft_putendl("returning null");
-	return (NULL);
-}
-*/
+	int i;
 
-t_node	*find_neighbour(t_node *node, t_graph *graph, int i, t_node *n)
-{
 	i = 0;
-	while (i < graph->nb_of_edges && graph->edges[i])
+	while (i < g->nb_of_nodes)
 	{
-		if (graph->edges[i]->start->id == node->id)
+		if (node->id != i && !check_start_end(node, g->nodes[i], g))
 		{
-			if (graph->edges[i]->end->visited == 0)
+			if (g->adj_matrix[node->id][i] == 1)
 			{
-				n = graph->edges[i]->end;
-				if (!check_start_end(node, n, graph))
-					return (n);
-			}
-		}
-		else if (graph->edges[i]->end->id == node->id)
-		{
-			if (graph->edges[i]->start->visited == 0)
-			{
-				n = graph->edges[i]->start;
-				if (!check_start_end(node, n, graph))
-					return (n);
+				if (g->nodes[i]->visited == 0)
+					return (g->nodes[i]);
 			}
 		}
 		i++;
