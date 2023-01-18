@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:05:00 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/13 17:08:08 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:40:19 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(void)
 	graph = create_graph();
 	parser(graph);
 	validate_graph(graph);
+	//ft_putendl("valid");
 	i = bfs(graph, NULL, NULL, NULL);
 	while (i == 1)
 		i = bfs(graph, NULL, NULL, NULL);

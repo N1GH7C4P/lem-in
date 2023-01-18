@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/13 16:43:22 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:58:37 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	backtrack(t_node **history, t_graph *graph)
 		if (node->is_end && history[node->id]->is_start)
 			if (!graph->smallest_path)
 				graph->smallest_path = 1;
-		graph->adj_matrix[node->id][history[node->id]->id] += 1;
-		graph->adj_matrix[history[node->id]->id][node->id] -= 1;
 		node = history[node->id];
 		node->path_id = graph->nb_of_paths;
 		node->visited = 2;

@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:59:11 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/12/14 17:48:17 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:18:58 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,11 @@ int	count_c(char *l, char c)
 	return (count);
 }
 
-// Checks if two nodes form the smallest possible path from start to end.
-int	check_start_end(t_node *a, t_node *b, t_graph *g)
+void	exit_program(int ret, char *msg)
 {
-	if ((a->is_start || a->is_end) && (b->is_end || b->is_start))
-	{
-		if (g->smallest_path == 1)
-			return (1);
-		else
-			g->smallest_path = 1;
-	}
-	return (0);
+	if (msg && DESCRIPTIVE_MSGS == 1)
+		ft_putendl_fd(msg, 2);
+	else if(ret == -1)
+		ft_putendl_fd("Error", 2);
+	exit(ret);
 }

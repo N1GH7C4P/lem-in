@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 19:06:39 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/13 16:11:34 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:18:50 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,22 @@ void	print_paths(t_path **p, int length_mode)
 	}
 }
 
-void	exit_program(int ret, char *msg)
+void	print_edges(t_edge **edges)
 {
-	if (msg && DESCRIPTIVE_MSGS == 1)
-		ft_putendl_fd(msg, 2);
-	else if(ret == -1)
-		ft_putendl_fd("Error", 2);
-	exit(ret);
+	int	i;
+
+	i = 0;
+	while (edges[i])
+	{
+		print_edge(edges[i]);
+		ft_putendl("");
+		i++;
+	}
+}
+
+void	print_edge(t_edge *edge)
+{
+	ft_putstr(edge->start->name);
+	ft_putstr("-");
+	ft_putstr(edge->end->name);
 }

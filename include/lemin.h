@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/13 13:49:48 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:18:10 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # define DESCRIPTIVE_MSGS 1
 # define MAX_LINES 30000
 # define QUEUE_MAX 30000
-# define MAX_NODES 2000
 # include <unistd.h>
 # include <stdio.h>
 # include "../libft/libft.h"
@@ -24,15 +23,17 @@
 // Data structure to store a graph node.
 typedef struct s_node
 {
-	int		x;
-	int		y;
-	int		id;
-	char	*name;
-	int		visited;
-	int		path_id;
-	int		is_start;
-	int		is_end;
-	int		ant_present;
+	int				x;
+	int				y;
+	int				id;
+	char			*name;
+	int				visited;
+	int				path_id;
+	int				is_start;
+	int				is_end;
+	int				ant_present;
+	struct s_node	*previous;
+	struct s_node	*next;
 }	t_node;
 
 // Data structure to store a path object, made of any number of edge objects;
@@ -56,6 +57,8 @@ typedef struct s_edge
 {
 	t_node	*start;
 	t_node	*end;
+	int		used_forwards;
+	int		used_backwards;
 }	t_edge;
 
 // Data structure to store a graph object
@@ -69,7 +72,6 @@ typedef struct s_graph
 	int		ants_finished;
 	int		smallest_path;
 	int		lines;
-	int		adj_matrix[MAX_NODES][MAX_NODES];
 
 	t_node	*start;
 	t_node	*end;
@@ -125,7 +127,7 @@ void	print_nodes(t_node **nodes);
 void	print_node(t_node *node);
 void	free_node(t_node *n);
 
-t_edge	*create_edge(t_node *start, t_node *end);
+t_edge	*create_edge(t_node *start, t_node *end, t_graph *g);
 void	print_edges(t_edge **edges);
 void	print_edge(t_edge *edge);
 void	free_edge(t_edge *e);
@@ -145,7 +147,6 @@ int		bfs(t_graph *graph, t_queue *q, t_node	*neighbour, t_node **prev);
 // Utility
 int		count_c(char *l, char c);
 int		count_lines_with_id(char **lines, int id);
-int		check_start_end(t_node *a, t_node *b, t_graph *g);
 
 // Output
 void	print_paths(t_path **p, int length_mode);
