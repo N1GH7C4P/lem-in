@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/20 16:45:28 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/20 17:42:37 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_graph
 	int		nb_of_nodes;
 	int		nb_of_edges;
 	int		nb_of_paths;
+	int		nb_of_best_paths;
 	int		ants_available;
 	int		ants_placed;
 	int		ants_finished;
@@ -80,6 +81,7 @@ typedef struct s_graph
 	t_node	**nodes;
 	t_edge	**edges;
 	t_path	**paths;
+	t_path	**best_paths;
 	t_ant	**ants;
 	t_node	**history;
 }	t_graph;
@@ -92,20 +94,13 @@ typedef struct s_queue
 	int		front;
 }	t_queue;
 
+// Ants
 void	advance_ants(t_graph *g, int i, int first_ant);
 void	place_ant_on_path(t_path *p, t_ant *a, t_graph *g);
 t_ant	*new_ant(int id);
 void	free_ant(t_ant *a);
 
-int		count_nodes_with_path_id(t_graph *g, int path_id);
-t_node	*find_next_node_in_path(t_node *node, t_graph *graph, int path_id);
-void	free_path(t_path *p);
-t_path	*new_path(int path_length);
-t_path	*create_path(t_graph *g, int path_id);
-void	traverse_paths(t_graph *g);
-void	print_path(t_path *p);
-t_path	*find_optimal_path(t_graph *g);
-
+// Queue
 t_queue	*new_queue(size_t n);
 t_node	*dequeue(t_queue *q);
 void	enqueue(t_queue *q, t_node *node);
@@ -114,31 +109,39 @@ int		is_empty(t_queue *q);
 void	debug_queue(t_queue *q);
 void	free_queue(t_queue *q);
 
+// Graph
 t_graph	*create_graph(void);
-t_node	*find_path(t_node *node, t_graph *graph, int path_id);
-int		traverse_path(t_graph *g, int path_id);
-void	traverse_paths(t_graph *g);
-void	printGraph(t_graph *graph);
+int		validate_graph(t_graph *g);
 void	reset_visit_status(t_graph *g);
 void	place_all_ants(t_graph *g);
 void	free_graph(t_graph *g);
 
+// Path
+t_node	*find_path(t_node *node, t_graph *graph, int path_id);
+int		traverse_path(t_graph *g, int path_id);
+void	traverse_paths(t_graph *g);
+void	save_paths_data(t_graph *g);
+void	free_path(t_path *p);
+t_path	*new_path(int path_length);
+t_path	*create_path(t_graph *g, int path_id);
+void	print_path(t_path *p);
+int		count_nodes_with_path_id(t_graph *g, int path_id);
+t_node	*find_next_node_in_path(t_node *node, t_graph *graph, int path_id);
+t_path	*find_optimal_path(t_graph *g);
+
+// Node
 t_node	*find_neighbour(t_node *node, t_graph *graph);
 t_node	*create_node(char *name, int ret, int x, int y);
 t_node	*get_node_by_name(char *name, t_node **nodes);
-void	print_nodes(t_node **nodes);
-void	print_node(t_node *node);
 void	free_node(t_node *n);
 
+// Edge
 t_edge	*create_edge(t_node *start, t_node *end, t_graph *g);
 void	print_edges(t_edge **edges);
 void	print_edge(t_edge *edge);
 void	free_edge(t_edge *e);
 t_edge *find_double_used_edge(t_graph *g);
 
-int		validate_graph(t_graph *g);
-void	print_farm(t_graph *g);
-void	exit_program(int ret, char *msg);
 // Parser
 int		parser(t_graph *graph);
 void	handle_edges(char **lines, t_graph *g);
@@ -151,9 +154,14 @@ int		bfs(t_graph *graph, int direction);
 // Utility
 int		count_c(char *l, char c);
 int		count_lines_with_id(char **lines, int id);
+void	exit_program(int ret, char *msg);
 
 // Output
 void	print_paths(t_path **p, int length_mode);
 void	print_ant_movement(int ant_id, char *node_name, int first);
-void	print_adj_matrix(t_graph *g);
+void	print_farm(t_graph *g);
+void	print_nodes(t_node **nodes);
+void	print_node(t_node *node);
+void	printGraph(t_graph *graph);
+
 #endif

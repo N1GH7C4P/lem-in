@@ -6,16 +6,71 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 23:24:57 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/18 18:10:08 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/20 17:44:20 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 
+t_path	*new_path(int len)
+{
+	t_path	*p;
+
+	p = (t_path *)malloc(sizeof(t_path));
+	p->path_length = len;
+	p->nodes = (t_node **)malloc(sizeof(t_node *) * (len + 1));
+	p->nodes[len] = NULL;
+	p->ants = 0;
+	return (p);
+}
+
+t_path *copy_path(t_path *p)
+{
+	t_path *new_p;
+	int		i;
+
+	new_p = new_path(p->path_length);
+	i = 0;
+	while(i < p->path_length)
+	{
+		new_p->nodes[i] = p->nodes[i];
+		i++;
+	}
+	new_p->nodes[i] = NULL;
+	return (new_p);
+}
+
 void	free_path(t_path *p)
 {
 	free(p->nodes);
 	free(p);
+}
+
+void	free_all_paths(t_path **paths, int nb_of_paths)
+{
+	int i;
+
+	i = 0;
+	while (i < nb_of_paths)
+	{
+		free_path(paths[i]);
+		i++;
+	}
+	free(paths);
+}
+
+void	save_paths_data(t_graph *g)
+{
+	int i;
+
+	g->best_paths = (t_path **)malloc(sizeof(t_path *) * g->nb_of_paths + 1);
+	i = 0;
+	while (i < g->nb_of_paths)
+	{
+		g->best_paths[i] = copy_path(g->paths[i]);
+		i++;
+	}
+	g->best_paths[i] = NULL;
 }
 
 t_node	*find_next_node_in_path(t_node *node, t_graph *g, int id)
@@ -47,18 +102,6 @@ t_node	*find_next_node_in_path(t_node *node, t_graph *g, int id)
 		}
 	}
 	return (NULL);
-}
-
-t_path	*new_path(int len)
-{
-	t_path	*p;
-
-	p = (t_path *)malloc(sizeof(t_path));
-	p->path_length = len;
-	p->nodes = (t_node **)malloc(sizeof(t_node *) * (len + 1));
-	p->nodes[len] = NULL;
-	p->ants = 0;
-	return (p);
 }
 
 t_path	*create_path(t_graph *g, int path_id)
