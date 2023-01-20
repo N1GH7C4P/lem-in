@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/18 18:18:10 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/20 15:00:21 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_graph
 	int		ants_finished;
 	int		smallest_path;
 	int		lines;
+	int		path_found;
 
 	t_node	*start;
 	t_node	*end;
@@ -79,6 +80,7 @@ typedef struct s_graph
 	t_edge	**edges;
 	t_path	**paths;
 	t_ant	**ants;
+	t_node	**history;
 }	t_graph;
 
 // Data structure to queue node objects
@@ -142,7 +144,7 @@ void	handle_nodes(char **lines, t_graph *g);
 int		identify_line(char *line, int line_nb);
 
 // Algorithms
-int		bfs(t_graph *graph, t_queue *q, t_node	*neighbour, t_node **prev);
+int		bfs(t_graph *graph, int direction);
 
 // Utility
 int		count_c(char *l, char c);
