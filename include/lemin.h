@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/20 15:00:21 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/20 16:45:28 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_node
 	char			*name;
 	int				visited;
 	int				path_id;
+	int				old_path_id;
 	int				is_start;
 	int				is_end;
 	int				ant_present;
@@ -133,6 +134,7 @@ t_edge	*create_edge(t_node *start, t_node *end, t_graph *g);
 void	print_edges(t_edge **edges);
 void	print_edge(t_edge *edge);
 void	free_edge(t_edge *e);
+t_edge *find_double_used_edge(t_graph *g);
 
 int		validate_graph(t_graph *g);
 void	print_farm(t_graph *g);

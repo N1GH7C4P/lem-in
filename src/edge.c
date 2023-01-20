@@ -6,11 +6,25 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/18 18:23:57 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/20 16:46:58 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
+
+t_edge *find_double_used_edge(t_graph *g)
+{
+	int i;
+
+	i = 0;
+	while (i < g->nb_of_edges)
+	{
+		if (g->edges[i]->start->visited == 3 && g->edges[i]->end->visited == 3)
+			return (g->edges[i]);
+		i++;
+	}
+	return (NULL);
+}
 
 // Checks if either node of the edge (e) matches to a given node (n) in graph (g)
 static t_node *check_edge(t_edge *e, t_node *n, t_graph *g)

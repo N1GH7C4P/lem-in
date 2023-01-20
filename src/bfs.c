@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/20 15:19:57 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/20 16:41:50 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,23 @@ static void	check_smallest_path(t_graph *g, int direction, t_node *n)
 	}
 }
 
+static void	visit_node(t_node *n, t_graph *g)
+{
+	if (n->visited == 1)
+		n->visited = 2;
+	else if (n->visited == 2)
+	{
+		n->old_path_id = n->path_id;
+		n->visited = 3;
+	}
+	n->path_id = g->nb_of_paths;
+	if (n->is_start != 1)
+	{
+		n->previous = g->history[n->id];
+		g->history[n->id]->next = n;
+	}
+}
+
 int	backtrack(t_graph *graph, int direction)
 {
 	t_node	*node;
@@ -42,8 +59,7 @@ int	backtrack(t_graph *graph, int direction)
 	{
 		check_smallest_path(graph, direction, node);
 		node = graph->history[node->id];
-		node->path_id = graph->nb_of_paths;
-		node->visited = 2;
+		visit_node(node, graph);
 		if (node->is_start || node->is_end)
 			break ;
 	}
