@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/20 17:42:37 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/22 19:57:24 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define DESCRIPTIVE_MSGS 1
 # define MAX_LINES 30000
 # define QUEUE_MAX 30000
+# define DEBUGGING 0
 # include <unistd.h>
 # include <stdio.h>
 # include "../libft/libft.h"
@@ -75,6 +76,9 @@ typedef struct s_graph
 	int		smallest_path;
 	int		lines;
 	int		path_found;
+	int		least_nb_of_rounds;
+	int		nb_of_rounds;
+	int		backpedaled;
 
 	t_node	*start;
 	t_node	*end;
@@ -95,10 +99,12 @@ typedef struct s_queue
 }	t_queue;
 
 // Ants
-void	advance_ants(t_graph *g, int i, int first_ant);
+void	advance_ants(t_graph *g, int i, int first_ant, int print);
 void	place_ant_on_path(t_path *p, t_ant *a, t_graph *g);
+void	place_all_ants(t_graph *g, int print);
 t_ant	*new_ant(int id);
 void	free_ant(t_ant *a);
+void	reset_ants(t_graph *g);
 
 // Queue
 t_queue	*new_queue(size_t n);
@@ -113,7 +119,6 @@ void	free_queue(t_queue *q);
 t_graph	*create_graph(void);
 int		validate_graph(t_graph *g);
 void	reset_visit_status(t_graph *g);
-void	place_all_ants(t_graph *g);
 void	free_graph(t_graph *g);
 
 // Path
@@ -130,7 +135,6 @@ t_node	*find_next_node_in_path(t_node *node, t_graph *graph, int path_id);
 t_path	*find_optimal_path(t_graph *g);
 
 // Node
-t_node	*find_neighbour(t_node *node, t_graph *graph);
 t_node	*create_node(char *name, int ret, int x, int y);
 t_node	*get_node_by_name(char *name, t_node **nodes);
 void	free_node(t_node *n);
@@ -149,7 +153,15 @@ void	handle_nodes(char **lines, t_graph *g);
 int		identify_line(char *line, int line_nb);
 
 // Algorithms
-int		bfs(t_graph *graph, int direction);
+int		bfs(t_graph *g, int tolerate_visit, t_node *start, t_node *end);
+int		free_bfs(t_graph *g, t_queue *q);
+int		backtrack(t_graph *graph, t_node *start, t_node *end)
+t_node	*find_neighbour(t_node *node, t_graph *graph, int tolerate_visit);
+void	visit_neighbour(t_node *nd, t_node *ng, t_queue *q, t_graph *g);
+void	set_start_node(t_queue *q, t_graph *g, t_node *start);
+
+// Path Augmentation
+int		find_augmenting_paths(t_graph *g);
 
 // Utility
 int		count_c(char *l, char c);
@@ -162,6 +174,6 @@ void	print_ant_movement(int ant_id, char *node_name, int first);
 void	print_farm(t_graph *g);
 void	print_nodes(t_node **nodes);
 void	print_node(t_node *node);
-void	printGraph(t_graph *graph);
+void	print_graph(t_graph *graph);
 
 #endif

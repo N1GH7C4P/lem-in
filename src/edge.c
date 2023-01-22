@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/20 16:46:58 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/22 19:59:59 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,25 @@ t_edge *find_double_used_edge(t_graph *g)
 }
 
 // Checks if either node of the edge (e) matches to a given node (n) in graph (g)
-static t_node *check_edge(t_edge *e, t_node *n, t_graph *g)
+static t_node *check_edge(t_edge *e, t_node *n, t_graph *g, int tolerate_visit)
 {
 	if (!e || !n || !g)
 		return (NULL);
 	if (n == e->end)
 	{
-		if (e->start->visited == 0)
+		if (e->start->visited == 0 || (tolerate_visit == 1 && e->start->visited == 2))
 			return (e->start);
 	}
 	if (n == e->start)
 	{
-		if (e->end->visited == 0)
+		if (e->end->visited == 0 || (tolerate_visit == 1 && e->end->visited == 2))
 			return (e->end);
 	}
 	return (NULL);
 }
 
 // Finds neighbous of node (n) in graph (g)
-t_node	*find_neighbour(t_node *n, t_graph *g)
+t_node	*find_neighbour(t_node *n, t_graph *g, int tolerate_visit)
 {
 	int 	i;
 	t_node	*ret;
@@ -53,7 +53,7 @@ t_node	*find_neighbour(t_node *n, t_graph *g)
 	i = 0;
 	while (i < g->nb_of_edges - 1)
 	{
-		ret = check_edge(g->edges[i], n, g);
+		ret = check_edge(g->edges[i], n, g, tolerate_visit);
 		if (ret)
 			return (ret);
 		i++;

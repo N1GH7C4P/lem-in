@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 23:24:57 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/20 17:44:20 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/22 17:26:38 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	save_paths_data(t_graph *g)
 		g->best_paths[i] = copy_path(g->paths[i]);
 		i++;
 	}
+	g->least_nb_of_rounds = g->nb_of_rounds;
+	g->nb_of_rounds = 0;
 	g->best_paths[i] = NULL;
 }
 
@@ -110,6 +112,9 @@ t_path	*create_path(t_graph *g, int path_id)
 	t_path	*p;
 	int		i;
 
+	//ft_putstr("path_id: ");
+	//ft_putnbr(path_id);
+	//ft_putendl("");
 	p = new_path(count_nodes_with_path_id(g, path_id));
 	reset_visit_status(g);
 	g->start->visited = 1;

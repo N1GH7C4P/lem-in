@@ -6,33 +6,23 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/20 16:41:50 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/22 20:02:30 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 
-static void	check_smallest_path(t_graph *g, int direction, t_node *n)
+static void	check_smallest_path(t_graph *g, t_node *n)
 {
-	if (direction == 1)
-	{
-		if (n->is_end && g->history[n->id]->is_start)
-			if (!g->smallest_path)
-				g->smallest_path = 1;
-	}
-	else
-	{
-		if (n->is_start && g->history[n->id]->is_end)
-			if (!g->smallest_path)
-				g->smallest_path = 1;
-	}
+	if (n->is_end && g->history[n->id]->is_start)
+		if (!g->smallest_path)
+			g->smallest_path = 1;
 }
 
 static void	visit_node(t_node *n, t_graph *g)
 {
-	if (n->visited == 1)
-		n->visited = 2;
-	else if (n->visited == 2)
+	n->visited = 2;
+	if (n->path_id)
 	{
 		n->old_path_id = n->path_id;
 		n->visited = 3;
@@ -45,29 +35,26 @@ static void	visit_node(t_node *n, t_graph *g)
 	}
 }
 
-int	backtrack(t_graph *graph, int direction)
+int	backtrack(t_graph *graph, t_node *start, t_node *end)
 {
 	t_node	*node;
 
-	if (direction == 1)
-		node = graph->end;
-	else
-		node = graph->start;
+	node = end;
 	graph->nb_of_paths = graph->nb_of_paths + 1;
 	node->path_id = graph->nb_of_paths;
 	while (node)
 	{
-		check_smallest_path(graph, direction, node);
+		check_smallest_path(graph, node);
 		node = graph->history[node->id];
 		visit_node(node, graph);
-		if (node->is_start || node->is_end)
+		if (node == start)
 			break ;
 	}
 	reset_visit_status(graph);
 	return (1);
 }
 
-static int	free_bfs(t_graph *g, t_queue *q)
+int	free_bfs(t_graph *g, t_queue *q)
 {
 	
 	free_queue(q);
@@ -80,35 +67,20 @@ static int	free_bfs(t_graph *g, t_queue *q)
 	return (0);
 }
 
-static void		set_start_node(t_queue *q, t_graph *g, int direction)
+void	set_start_node(t_queue *q, t_graph *g, t_node *start)
 {
-	if (direction == 1)
-	{
 		enqueue(q, g->start);
-		g->start->visited = 1;
-	}
-	else
-	{
-		enqueue(q, g->end);
-		g->end->visited = 1;
-	}
+		start->visited = 1;
 }
 
-static t_node	*visit_neighbour(t_node *nd, t_node *ng, t_queue *q, t_graph *g)
+void	visit_neighbour(t_node *nd, t_node *ng, t_queue *q, t_graph *g)
 {
+	enqueue(q, ng);
 	ng->visited = 1;
 	g->history[ng->id] = nd;
-	enqueue(q, ng);
-	if (ng->is_end == 1 || ng->is_start == 1)
-	{
-		g->path_found = 1;
-		return (NULL);
-	}
-	ng = find_neighbour(nd, g);
-	return (ng);
 }
 
-int	bfs(t_graph *g, int direction)
+int	bfs(t_graph *g, int tolerate_visit, t_node *start, t_node *end)
 {
 	t_node	*node;
 	t_node	*neighbour;
@@ -116,15 +88,19 @@ int	bfs(t_graph *g, int direction)
 
 	q = new_queue(g->nb_of_nodes + 1);
 	g->history = (t_node **)malloc(sizeof(t_node *) * (g->nb_of_nodes + 1));
-	set_start_node(q, g, direction);
+	set_start_nodes(q, g, start);
 	while (!is_empty(q) && g->path_found != 1)
 	{
 		node = dequeue(q);
-		neighbour = find_neighbour(node, g);
+		neighbour = find_neighbour(node, g, tolerate_visit);
 		while (neighbour)
-			neighbour = visit_neighbour(node, neighbour, q, g);
+		{
+			visit_neighbour(node, neighbour, q, g);
+		
+			neighbour = find_neighbour(node, g, tolerate_visit);
+		}
 	}
 	if (g->path_found)
-		backtrack(g, direction);
+		backtrack(g, start, end);
 	return (free_bfs(g, q));
 }

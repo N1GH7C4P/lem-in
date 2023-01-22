@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:18:31 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/13 16:15:30 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/22 16:11:45 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ void	print_node(t_node *node)
 	{
 		ft_putstr(" ");
 		ft_putnbr(node->y);
+	}
+	if (DEBUGGING == 1)
+	{
+		ft_putstr("\nvisited: ");
+		ft_putnbr(node->visited);
+		ft_putstr("\npath_id: ");
+		ft_putnbr(node->path_id);
 	}
 	ft_putendl("");
 }

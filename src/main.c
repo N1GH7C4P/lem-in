@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:05:00 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/20 17:43:42 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/22 19:47:27 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,29 @@ int	main(void)
 	parser(graph);
 	validate_graph(graph);
 	//ft_putendl("valid");
-	i = bfs(graph, 1);
+	i = bfs(graph, 1, 0);
 	while (i == 1)
-		i = bfs(graph, 1);
+		i = bfs(graph, 1, 0);
 	traverse_paths(graph);
 	if (graph->nb_of_paths < 1)
 		exit_program(-1, "invalid map");
+	place_all_ants(graph, 0);
+	save_paths_data(graph);
+	reset_ants(graph);
+	reset_visit_status(graph);
+	graph->path_found = 0;
+	//print_nodes(graph->nodes);
+	//find_augmenting_paths(graph);
+	traverse_paths(graph);
+	//ft_putendl("nb of rounds: ");
+	//ft_putnbr(graph->nb_of_rounds);
 	print_farm(graph);
 	//print_paths(graph->paths, 0);
 	//ft_putstr("nb of paths: ");
 	//ft_putnbr(graph->nb_of_paths);
 	//ft_putendl("");
-	place_all_ants(graph);
+	place_all_ants(graph, 1);
 	free_graph(graph);
 	//print_paths(graph->paths, 1);
-	//print_adj_matrix(graph);
 	exit_program(0, NULL);
 }
