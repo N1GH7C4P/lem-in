@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/23 13:32:37 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:10:47 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef struct s_node
 	int				is_start;
 	int				is_end;
 	int				ant_present;
+	int				backpedaled;
+	int				first_node_in_path;
 	struct s_node	*previous;
 	struct s_node	*next;
 }	t_node;

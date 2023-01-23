@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 23:24:57 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/22 17:26:38 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:14:02 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,10 @@ t_path	*create_path(t_graph *g, int path_id)
 	p->nodes[0] = g->start;
 	i = 1;
 	next = find_next_node_in_path(p->nodes[0], g, path_id);
+	ft_putendl("creating path");
 	while (next)
 	{
+		print_node(next);
 		p->nodes[i] = next;
 		p->nodes[i - 1]->next = next;
 		if (next->is_end)
@@ -154,6 +156,7 @@ void	traverse_paths(t_graph *g)
 	while (i < g->nb_of_paths)
 	{
 		g->paths[i] = create_path(g, i + 1);
+		g->paths[i]->nodes[1]->first_node_in_path = 1;
 		i++;
 	}
 	if (g->smallest_path == 1)

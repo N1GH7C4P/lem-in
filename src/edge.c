@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/22 19:59:59 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:05:00 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_node	*find_neighbour(t_node *n, t_graph *g, int tolerate_visit)
 	t_node	*ret;
 
 	i = 0;
-	while (i < g->nb_of_edges - 1)
+	while (i < g->nb_of_edges)
 	{
 		ret = check_edge(g->edges[i], n, g, tolerate_visit);
 		if (ret)

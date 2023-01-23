@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:05:00 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/23 13:41:43 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:12:42 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(void)
 	reset_visit_status(graph);
 	graph->path_found = 0;
 	//print_nodes(graph->nodes);
-	//find_augmenting_paths(graph);
+	find_augmenting_paths(graph);
 	traverse_paths(graph);
 	//ft_putendl("nb of rounds: ");
 	//ft_putnbr(graph->nb_of_rounds);

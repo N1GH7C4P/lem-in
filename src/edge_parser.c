@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 19:59:36 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/18 18:20:15 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:01:44 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	handle_edges(char **lines, t_graph *g)
 	g->edges = (t_edge **)malloc
 		(sizeof(t_edge *) * (count_lines_with_id(lines, 1) + 1));
 	edges_processed = 0;
-	i = 1;
+	i = 0;
 	while (lines[i])
 	{
 		if (identify_line(lines[i], i) == 1)

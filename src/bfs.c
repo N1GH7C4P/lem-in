@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/23 13:40:21 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 15:37:50 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	backtrack(t_graph *graph, t_node *start, t_node *end)
 	node->path_id = graph->nb_of_paths;
 	while (node)
 	{
+		print_node(node);
 		check_smallest_path(graph, node);
 		node = graph->history[node->id];
 		visit_node(node, graph);
@@ -77,6 +78,8 @@ void	visit_neighbour(t_node *nd, t_node *ng, t_queue *q, t_graph *g)
 {
 	enqueue(q, ng);
 	ng->visited = 1;
+	nd->next = ng;
+	ng->previous = nd;
 	g->history[ng->id] = nd;
 }
 
@@ -96,7 +99,6 @@ int	bfs(t_graph *g, int tolerate_visit, t_node *start, t_node *end)
 		while (neighbour)
 		{
 			visit_neighbour(node, neighbour, q, g);
-		
 			neighbour = find_neighbour(node, g, tolerate_visit);
 		}
 	}

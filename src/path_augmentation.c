@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 14:48:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/23 13:32:52 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:12:22 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_node	*find_augmenting_neighbour(t_node *n, t_graph *g)
 			ret = check_aug_edge(g->edges[i], n, 0);
 		else
 			ret = check_aug_edge(g->edges[i], n, 1);
-		if (ret)
+		if (ret && ret->first_node_in_path != 1)
 		{
 			ft_putendl("free node found");
 			print_node(ret);
@@ -74,8 +74,7 @@ static t_node	*find_augmenting_neighbour(t_node *n, t_graph *g)
 		}
 	}
 	*/
-	ft_putendl("dead end");
-	reset_visit_status(g);
+	ft_putendl("no more free nodes");
 	return (NULL);
 }
 
@@ -88,52 +87,92 @@ t_node *find_backpedal_node(t_node *n,  t_graph *g)
 	{
 		if (g->edges[i]->start == n)
 		{
-			if (g->edges[i]->end->path_id == n->path_id)
+			if (g->edges[i]->end->path_id == n->path_id && g->edges[i]->used_backwards == 1)
 			{
-				ft_putendl("backpedal found");
-				print_edge(g->edges[i]);
-				if (g->edges[i]->end->is_start == 0)
+				if (g->edges[i]->end->is_start == 0 && g->edges[i]->end->first_node_in_path == 0)
+				{
+					ft_putendl("backpedal found");
+					print_edge(g->edges[i]);
+					ft_putendl("");
+					print_node(g->edges[i]->end);
 					return (g->edges[i]->end);
+				}
+				else
+				{
+					ft_putendl("no backpedaling to start node.");
+				}
 			}
 		}
 		if (g->edges[i]->end == n)
 		{
-			if (g->edges[i]->start->path_id == n->path_id)
+			if (g->edges[i]->start->path_id == n->path_id && g->edges[i]->used_forwards == 1)
 			{
-				ft_putendl("backpedal found");
-				print_edge(g->edges[i]);
-				if (g->edges[i]->start->is_start == 0)
+				if (g->edges[i]->start->is_start == 0 && g->edges[i]->start->first_node_in_path != 1)
+				{
+					ft_putendl("backpedal found");
+					print_edge(g->edges[i]);
+					ft_putendl("");
+					print_node(g->edges[i]->start);
 					return (g->edges[i]->start);
+				}
+				else
+				{
+					ft_putendl("no backpedaling to start node.");
+				}
 			}
 		}
 		i++;
 	}
+	ft_putendl("impossible to backpedal");
 	return (NULL);
+}
+
+int	check_backpedal_history(t_node *n)
+{
+	t_node	*prev;
+	
+	prev = n->previous;
+	while (prev)
+	{
+		ft_putendl("prev: ");
+		print_node(prev);
+		if (prev->is_start)
+			return (0);
+		if (prev->backpedaled == 1)
+			return (1);
+		prev = prev->previous;
+	}
+	return (0);
 }
 
 void	backpedal_existing_path(t_node *n, t_queue *q, t_graph *g)
 {
 	t_node *backpedal;
 	
-	if (g->backpedaled == 1)
+	if (check_backpedal_history(n) == 1)
 	{
+		ft_putendl("Backpedal present in history");
 		backpedal = find_augmenting_neighbour(n, g);
 		if (backpedal)
 		{
-			g->backpedaled = 0;
-			enqueue(q, backpedal);
+			visit_neighbour(n, backpedal, q, g);
 			return;
 		}
 	}
 	backpedal = find_backpedal_node(n, g);
 	if (backpedal)
 	{
-		g->backpedaled = 1;
+		if (backpedal->first_node_in_path == 1)
+		{
+			ft_putendl("No backpedaling to first node in path");
+			return;
+		}
+		n->backpedaled = 1;
 		backpedal->visited = 1;
 		g->history[backpedal->id] = n;
 		n->next = backpedal;
 		backpedal->previous = n;
-		enqueue(q, backpedal);
+		visit_neighbour(n, backpedal, q, g);
 	}
 }
 
@@ -151,7 +190,12 @@ int	augmenting_bfs(t_graph *g, t_node *start, t_node *end)
 		node = dequeue(q);
 		ft_putendl("queue");
 		print_node(node);
-		if (node->path_id > 0 && !node->is_start && !node->is_end)
+		if (node == end)
+		{
+			g->path_found = 1;
+			break;
+		}
+		if (node->path_id > 0 && !node->is_start && !node->is_end && !g->backpedaled)
 		{
 			ft_putendl("backpedalling");
 			backpedal_existing_path(node, q, g);
@@ -173,6 +217,7 @@ int	augmenting_bfs(t_graph *g, t_node *start, t_node *end)
 		//print_nodes(g->nodes);
 		ft_putendl("backtracking");
 		backtrack(g, start, end);
+		ft_putendl("backtracked");
 	}
 	return (free_bfs(g, q));
 }
