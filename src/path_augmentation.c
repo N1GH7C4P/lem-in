@@ -6,11 +6,101 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 14:48:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/23 16:12:22 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 18:00:49 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
+
+int		count_nodes_before_crossover(t_path *p, t_edge *e)
+{
+	int i;
+
+	i = 0;
+	while (p->nodes[i])
+	{
+		print_node(p->nodes[i]);
+		if (e->start == p->nodes[i] || e->end == p->nodes[i])
+			break;
+		i++;
+	}
+	ft_putendl("counted befre");
+	return (i + 1);
+}
+
+int		count_nodes_after_crossover(t_path *p, t_edge *e)
+{
+	int i;
+
+	i = 0;
+	while (p->nodes[i])
+	{
+		print_node(p->nodes[i]);
+		if (e->start == p->nodes[i] || e->end == p->nodes[i])
+			break;
+		i++;
+	}
+	ft_putendl("counted fter");
+	return (p->path_length - i - 1);
+}
+
+int		find_edge_index_in_path(t_path *p, t_edge *e)
+{
+	int i;
+
+	i = 0;
+	while (p->nodes[i] != e->end && p->nodes[i] != e->start)
+	{
+		i++;
+	}
+	return (i);
+}
+
+void	combine_paths(t_path *dest, t_path *src1, t_path *src2, t_edge *e)
+{
+	int i;
+
+	i = 0;
+	while (src1->nodes[i] != e->end && src1->nodes[i] != e->start)
+	{
+		dest->nodes[i] = src1->nodes[i];
+		i++;
+	}
+	dest->nodes[i] = src1->nodes[i];
+	i = find_edge_index_in_path(src2, e);
+	while (src2->nodes[i])
+	{
+		dest->nodes[i] = src2->nodes[i];
+		i++;
+	}
+	print_path(dest);
+}
+
+void	fix_paths(t_path *p1, t_path *p2, t_edge *e)
+{
+	int 	len;
+	t_path	*new;
+
+	len = count_nodes_after_crossover(p1, e) + count_nodes_before_crossover(p2, e);
+	ft_putnbr(len);
+	new = new_path(len);
+	combine_paths(new, p1, p2, e);
+}
+
+void	the_great_switcharoo(t_graph *g)
+{
+	t_edge	*double_used;
+	t_path	*p1;
+	t_path	*p2;
+
+	double_used = find_double_used_edge(g);
+	p1 = g->paths[double_used->start->old_path_id];
+	p2 = g->paths[double_used->end->path_id];
+	ft_putnbr(p1->nodes[1]->path_id);
+	ft_putnbr(p2->nodes[1]->path_id);
+	fix_paths(p1, p2, double_used);
+}
+
 
 static t_node *check_aug_edge(t_edge *e, t_node *n, int tolerate_visit)
 {
@@ -53,27 +143,6 @@ static t_node	*find_augmenting_neighbour(t_node *n, t_graph *g)
 		i++;
 	}
 	i = 0;
-	/*
-		ft_putendl("no free path");
-		if (!n->is_start)
-		{
-		while (i < g->nb_of_edges - 1)
-		{
-		ret = check_aug_edge(g->edges[i], n, 1);
-		if (ret)
-		{
-			ft_putendl("current node: ");
-			print_node(n);
-			ft_putendl("crossing path at: ");
-			print_edge(g->edges[i]);
-			ft_putendl("");
-			print_node(ret);
-			return (ret);
-		}
-		i++;
-		}
-	}
-	*/
 	ft_putendl("no more free nodes");
 	return (NULL);
 }
@@ -212,13 +281,6 @@ int	augmenting_bfs(t_graph *g, t_node *start, t_node *end)
 			}
 		}
 	}
-	if (g->path_found == 1)
-	{
-		//print_nodes(g->nodes);
-		ft_putendl("backtracking");
-		backtrack(g, start, end);
-		ft_putendl("backtracked");
-	}
 	return (free_bfs(g, q));
 }
 
@@ -231,6 +293,10 @@ int	find_augmenting_paths(t_graph *g)
 	ret = augmenting_bfs(g, g->start, g->end);
 	//print_nodes(g->nodes);
 	if (ret == 1)
+	{
+		backtrack(g, g->start, g->end);
 		g->paths[g->nb_of_paths] = create_path(g, g->nb_of_paths);
+	}
+	the_great_switcharoo(g);
 	return (0);
 }

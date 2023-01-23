@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/23 15:37:50 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 17:02:39 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	backtrack(t_graph *graph, t_node *start, t_node *end)
 
 	node = end;
 	graph->nb_of_paths = graph->nb_of_paths + 1;
+	if (node->path_id)
+		node->old_path_id = node->path_id;
 	node->path_id = graph->nb_of_paths;
 	while (node)
 	{

@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/23 16:10:47 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 17:59:11 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define DESCRIPTIVE_MSGS 1
 # define MAX_LINES 30000
 # define QUEUE_MAX 30000
-# define DEBUGGING 0
+# define DEBUGGING 1
 # include <unistd.h>
 # include <stdio.h>
 # include "../libft/libft.h"
@@ -164,6 +164,7 @@ void	set_start_node(t_queue *q, t_graph *g, t_node *start);
 
 // Path Augmentation
 int		find_augmenting_paths(t_graph *g);
+void	the_great_switcharoo(t_graph *g);
 
 // Utility
 int		count_c(char *l, char c);

@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/23 14:05:00 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:52:22 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,13 @@ t_edge *find_double_used_edge(t_graph *g)
 	i = 0;
 	while (i < g->nb_of_edges)
 	{
-		if (g->edges[i]->start->visited == 3 && g->edges[i]->end->visited == 3)
+		if (g->edges[i]->start->old_path_id && g->edges[i]->end->old_path_id)
+		{
+			ft_putendl("doublle used edge found");
+			print_edge(g->edges[i]);
+			ft_putendl("");
 			return (g->edges[i]);
+		}
 		i++;
 	}
 	return (NULL);
