@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:05:00 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/22 19:47:27 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:41:43 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	main(void)
 	parser(graph);
 	validate_graph(graph);
 	//ft_putendl("valid");
-	i = bfs(graph, 1, 0);
+	i = bfs(graph, 0, graph->start, graph->end);
 	while (i == 1)
-		i = bfs(graph, 1, 0);
+		i = bfs(graph, 0, graph->start, graph->end);
 	traverse_paths(graph);
 	if (graph->nb_of_paths < 1)
 		exit_program(-1, "invalid map");

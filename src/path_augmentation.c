@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 14:48:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/22 19:39:43 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:32:52 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	backpedal_existing_path(t_node *n, t_queue *q, t_graph *g)
 	}
 }
 
-int	augmenting_bfs(t_graph *g, int direction)
+int	augmenting_bfs(t_graph *g, t_node *start, t_node *end)
 {
 	t_node	*node;
 	t_node	*neighbour;
@@ -145,7 +145,7 @@ int	augmenting_bfs(t_graph *g, int direction)
 
 	q = new_queue(g->nb_of_nodes + 1);
 	g->history = (t_node **)malloc(sizeof(t_node *) * (g->nb_of_nodes + 1));
-	set_start_node(q, g, direction);
+	set_start_node(q, g, start);
 	while (!is_empty(q) && g->path_found != 1)
 	{
 		node = dequeue(q);
@@ -172,7 +172,7 @@ int	augmenting_bfs(t_graph *g, int direction)
 	{
 		//print_nodes(g->nodes);
 		ft_putendl("backtracking");
-		backtrack(g, direction);
+		backtrack(g, start, end);
 	}
 	return (free_bfs(g, q));
 }
@@ -183,7 +183,7 @@ int	find_augmenting_paths(t_graph *g)
 
 	//print_nodes(g->nodes);
 	//ft_putendl("nodes printed");
-	ret = augmenting_bfs(g, 1);
+	ret = augmenting_bfs(g, g->start, g->end);
 	//print_nodes(g->nodes);
 	if (ret == 1)
 		g->paths[g->nb_of_paths] = create_path(g, g->nb_of_paths);

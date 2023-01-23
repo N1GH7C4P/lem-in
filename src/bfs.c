@@ -6,7 +6,7 @@
 /*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/01/22 20:02:30 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/01/23 13:40:21 by kpolojar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	bfs(t_graph *g, int tolerate_visit, t_node *start, t_node *end)
 
 	q = new_queue(g->nb_of_nodes + 1);
 	g->history = (t_node **)malloc(sizeof(t_node *) * (g->nb_of_nodes + 1));
-	set_start_nodes(q, g, start);
+	set_start_node(q, g, start);
 	while (!is_empty(q) && g->path_found != 1)
 	{
 		node = dequeue(q);
