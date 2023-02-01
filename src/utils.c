@@ -3,22 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpolojar <kpolojar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:59:11 by kpolojar          #+#    #+#             */
-/*   Updated: 2022/11/04 19:58:38 by kpolojar         ###   ########.fr       */
+/*   Updated: 2023/02/01 11:39:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include "../libft/libft.h"
-
-void	exit_program(int ret, char *msg)
-{
-	if (msg)
-		ft_putendl(msg);
-	exit(ret);
-}
 
 int	count_nodes_with_path_id(t_graph *g, int id)
 {
@@ -65,4 +58,30 @@ int	count_lines_with_id(char **lines, int id)
 		i++;
 	}
 	return (count);
+}
+
+// Counts occurance of char c in char *l
+int	count_c(char *l, char c)
+{
+	int	i;
+	int	count;
+
+	count = 0;
+	i = 0;
+	while (l[i])
+	{
+		if (l[i] == c)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+void	exit_program(int ret, char *msg)
+{
+	if (msg && DESCRIPTIVE_MSGS == 1)
+		ft_putendl_fd(msg, 2);
+	else if(ret == -1)
+		ft_putendl_fd("Error", 2);
+	exit(ret);
 }
