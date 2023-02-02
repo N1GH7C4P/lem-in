@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/01 11:38:40 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/02 17:04:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,19 @@ static t_node *check_edge(t_edge *e, t_node *n, t_graph *g, int tolerate_visit)
 		return (NULL);
 	if (n == e->end)
 	{
-		if (e->start->visited == 0 || (tolerate_visit == 1 && e->start->visited == 2))
-			return (e->start);
+		if (e->start->visited == 0)
+		{
+			if (e->start->path_id == 0 || (tolerate_visit == 1 && e->start->visited == 2) || e->start->is_end == 1)
+					return (e->start);
+		}
 	}
 	if (n == e->start)
 	{
-		if (e->end->visited == 0 || (tolerate_visit == 1 && e->end->visited == 2))
-			return (e->end);
+		if(e->end->visited == 0)
+		{
+			if (e->end->path_id == 0 || (tolerate_visit == 1 && e->end->visited == 2) || e->end->is_end == 1)
+				return (e->end);
+		}
 	}
 	return (NULL);
 }

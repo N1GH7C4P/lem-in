@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:18:31 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/01 11:39:14 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/01 14:36:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	print_node(t_node *node)
 		ft_putnbr(node->visited);
 		ft_putstr("\npath_id: ");
 		ft_putnbr(node->path_id);
+		ft_putstr("\nold_path_id: ");
+		ft_putnbr(node->old_path_id);
 		ft_putstr("\nfirst_node_in_path: ");
 		ft_putnbr(node->first_node_in_path);
 	}
@@ -67,6 +69,8 @@ t_node	*create_node(char *name, int ret, int x, int y)
 	new_node->is_start = 0;
 	new_node->visited = 0;
 	new_node->path_id = 0;
+	new_node->old_path_id = 0;
+	new_node->first_node_in_path = 0;
 	new_node->x = x;
 	new_node->y = y;
 	new_node->ant_present = 0;

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 14:48:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/01 11:39:27 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/02 16:42:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,35 +57,66 @@ int		find_edge_index_in_path(t_path *p, t_edge *e)
 	return (i);
 }
 
-void	combine_paths(t_path *dest, t_path *src1, t_path *src2, t_edge *e)
+static void	reset_combined_path_ids(t_path *p, t_path *new)
+{
+		int i;
+
+		i = 0;
+		while (p->nodes[i])
+		{
+			if (p->nodes[i]->path_id != new->id)
+				p->nodes[i]->path_id = 0;
+			i++;
+		}
+}
+// returns path id
+t_path *combine_paths(t_path *src1, t_path *src2, t_edge *e, t_graph *g)
 {
 	int i;
+	int j;
+	int new_path_id;
+	t_path	*dest;
 
+	new_path_id = find_first_free_path_id(g);
+	dest =  new_path(count_nodes_after_crossover(src1, e) + count_nodes_before_crossover(src2, e), new_path_id);
+	dest->id = new_path_id;
 	i = 0;
 	while (src1->nodes[i] != e->end && src1->nodes[i] != e->start)
 	{
 		dest->nodes[i] = src1->nodes[i];
+		dest->nodes[i]->path_id = new_path_id;
+		dest->nodes[i]->old_path_id = 0;
+		if ((dest->nodes[i] == e->end || dest->nodes[i] == e->start) && (dest->nodes[i]->next == e->end || dest->nodes[i]->next == e->start))
+				break;
 		i++;
 	}
-	dest->nodes[i] = src1->nodes[i];
-	i = find_edge_index_in_path(src2, e);
-	while (src2->nodes[i])
+	j = find_node_id_in_path(src1->nodes[i], src2);
+	while (src2->nodes[j])
 	{
-		dest->nodes[i] = src2->nodes[i];
+		dest->nodes[i] = src2->nodes[j];
+		dest->nodes[i]->path_id = new_path_id;
+		dest->nodes[i]->old_path_id = 0;
 		i++;
+		j++;
 	}
+	ft_putendl("Combined path: ");
 	print_path(dest);
+	ft_putendl("Path printed");
+	return (dest);
 }
 
-void	fix_paths(t_path *p1, t_path *p2, t_edge *e)
+void	fix_paths(t_path *p1, t_path *p2, t_edge *e, t_graph *g)
 {
-	int 	len;
 	t_path	*new;
 
-	len = count_nodes_after_crossover(p1, e) + count_nodes_before_crossover(p2, e);
-	ft_putnbr(len);
-	new = new_path(len);
-	combine_paths(new, p1, p2, e);
+	new = combine_paths(p1, p2, e, g);
+	reset_combined_path_ids(p1, new);
+	free_path(p1);
+	g->path_id_availability[p2->id - 1] = 0;
+	reset_combined_path_ids(p2, new);
+	free_path(p2);
+	g->paths[new->id - 1] = new;
+	g->nb_of_paths--;
 }
 
 void	the_great_switcharoo(t_graph *g)
@@ -95,13 +126,13 @@ void	the_great_switcharoo(t_graph *g)
 	t_path	*p2;
 
 	double_used = find_double_used_edge(g);
-	p1 = g->paths[double_used->start->old_path_id];
-	p2 = g->paths[double_used->end->path_id];
-	ft_putnbr(p1->nodes[1]->path_id);
-	ft_putnbr(p2->nodes[1]->path_id);
-	fix_paths(p1, p2, double_used);
+	ft_putendl("printing double use edge nodes: ");
+	print_node(double_used->start);
+	print_node(double_used->end);
+	p1 = g->paths[double_used->start->old_path_id - 1];
+	p2 = g->paths[double_used->end->path_id - 1];
+	fix_paths(p1, p2, double_used, g);
 }
-
 
 static t_node *check_aug_edge(t_edge *e, t_node *n, int tolerate_visit)
 {
@@ -251,7 +282,8 @@ int	augmenting_bfs(t_graph *g, t_node *start, t_node *end)
 	t_node	*node;
 	t_node	*neighbour;
 	static	t_queue* q; 
-
+	
+	ft_putendl("augmenting bfs");
 	q = new_queue(g->nb_of_nodes + 1);
 	g->history = (t_node **)malloc(sizeof(t_node *) * (g->nb_of_nodes + 1));
 	set_start_node(q, g, start);
@@ -288,6 +320,7 @@ int	augmenting_bfs(t_graph *g, t_node *start, t_node *end)
 int	find_augmenting_paths(t_graph *g)
 {
 	int ret;
+	int path_id;
 
 	//print_nodes(g->nodes);
 	//ft_putendl("nodes printed");
@@ -295,9 +328,9 @@ int	find_augmenting_paths(t_graph *g)
 	//print_nodes(g->nodes);
 	if (ret == 1)
 	{
-		backtrack(g, g->start, g->end);
-		g->paths[g->nb_of_paths] = create_path(g, g->nb_of_paths);
+		path_id = find_first_free_path_id(g);
+		backtrack(g, g->start, g->end, path_id);
+		g->paths[path_id - 1] = create_path(g, path_id);
 	}
-	the_great_switcharoo(g);
 	return (0);
 }

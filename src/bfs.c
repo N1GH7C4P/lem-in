@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/01 11:38:27 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/02 16:45:21 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	check_smallest_path(t_graph *g, t_node *n)
 			g->smallest_path = 1;
 }
 
-static void	visit_node(t_node *n, t_graph *g)
+static void	visit_node(t_node *n, t_graph *g, int path_id)
 {
 	n->visited = 2;
 	if (n->path_id)
@@ -28,7 +28,7 @@ static void	visit_node(t_node *n, t_graph *g)
 		n->old_path_id = n->path_id;
 		n->visited = 3;
 	}
-	n->path_id = g->nb_of_paths;
+	n->path_id = path_id;
 	if (n->is_start != 1)
 	{
 		n->previous = g->history[n->id];
@@ -36,21 +36,20 @@ static void	visit_node(t_node *n, t_graph *g)
 	}
 }
 
-int	backtrack(t_graph *graph, t_node *start, t_node *end)
+int	backtrack(t_graph *graph, t_node *start, t_node *end, int path_id)
 {
 	t_node	*node;
 
 	node = end;
-	graph->nb_of_paths = graph->nb_of_paths + 1;
 	if (node->path_id)
 		node->old_path_id = node->path_id;
-	node->path_id = graph->nb_of_paths;
+	node->path_id = path_id;
 	while (node)
 	{
 		print_node(node);
 		check_smallest_path(graph, node);
 		node = graph->history[node->id];
-		visit_node(node, graph);
+		visit_node(node, graph, path_id);
 		if (node == start)
 			break ;
 	}
@@ -73,6 +72,7 @@ int	free_bfs(t_graph *g, t_queue *q)
 
 void	set_start_node(t_queue *q, t_graph *g, t_node *start)
 {
+		print_node(start);
 		enqueue(q, g->start);
 		start->visited = 1;
 }
@@ -84,20 +84,28 @@ void	visit_neighbour(t_node *nd, t_node *ng, t_queue *q, t_graph *g)
 	nd->next = ng;
 	ng->previous = nd;
 	g->history[ng->id] = nd;
+	if (ng->is_end == 1)
+	{
+		ft_putendl("end node visited");
+		g->path_found = 1;
+	}
 }
 
 int	bfs(t_graph *g, int tolerate_visit, t_node *start, t_node *end)
 {
 	t_node	*node;
 	t_node	*neighbour;
-	static	t_queue* q; 
+	static	t_queue* q;
+	int			path_id;
 
+	ft_putendl("running bfs");
 	q = new_queue(g->nb_of_nodes + 1);
 	g->history = (t_node **)malloc(sizeof(t_node *) * (g->nb_of_nodes + 1));
 	set_start_node(q, g, start);
 	while (!is_empty(q) && g->path_found != 1)
 	{
 		node = dequeue(q);
+		print_node(node);
 		neighbour = find_neighbour(node, g, tolerate_visit);
 		while (neighbour)
 		{
@@ -105,7 +113,16 @@ int	bfs(t_graph *g, int tolerate_visit, t_node *start, t_node *end)
 			neighbour = find_neighbour(node, g, tolerate_visit);
 		}
 	}
-	if (g->path_found)
-		backtrack(g, start, end);
+	if (g->path_found == 1)
+	{
+		ft_putendl("backtracking");
+		path_id = find_first_free_path_id(g);
+		backtrack(g, start, end, path_id);
+		ft_putendl("creating path");
+		g->paths[path_id - 1] = create_path(g, path_id);
+		ft_putendl("printing path");
+		print_path(g->paths[path_id - 1]);
+	}
+	ft_putendl("exiting bfs");
 	return (free_bfs(g, q));
 }
