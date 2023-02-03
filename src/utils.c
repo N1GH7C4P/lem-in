@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:59:11 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/02 15:48:14 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 12:03:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,12 @@ int	count_nodes_with_path_id(t_graph *g, int id)
 			count++;
 		i++;
 	}
-	ft_putstr("count: ");
-	ft_putnbr(count);
-	ft_putendl("");
+	if (DEBUGGING > 0)
+	{
+		ft_putstr("count: ");
+		ft_putnbr(count);
+		ft_putendl("");
+	}
 	return (count);
 }
 

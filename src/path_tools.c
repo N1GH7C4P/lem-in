@@ -54,18 +54,23 @@ t_path	*create_path(t_graph *g, int path_id)
 	next = find_next_node_in_path(p->nodes[0], g, path_id);
 	if (DEBUGGING == 2 || DEBUGGING == 1)
 	{
-		ft_putstr("creating path (");
-		ft_putnbr(path_id);
-		ft_putendl(")");
+		if (DEBUGGING > 0)
+		{
+			ft_putstr("creating path (");
+			ft_putnbr(path_id);
+			ft_putendl(")");
+		}
 	}
 	while (next)
 	{
-		print_node(next);
+		if (DEBUGGING > 0)
+			print_node(next);
 		p->nodes[i] = next;
 		p->nodes[i - 1]->next = next;
 		if (next->is_end == 1)
 		{
-			ft_putendl("path finished");
+			if (DEBUGGING > 0)
+				ft_putendl("path finished");
 			g->path_id_availability[path_id] = 1;
 			p->nodes[1]->first_node_in_path = 1;
 			return (p);
@@ -73,7 +78,7 @@ t_path	*create_path(t_graph *g, int path_id)
 		next = find_next_node_in_path(next, g, path_id);
 		i++;
 	}
-	free_path(p);
+	free_path(p, g);
 	return (NULL);
 }
 

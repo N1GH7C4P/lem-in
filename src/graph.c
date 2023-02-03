@@ -6,12 +6,38 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 15:58:27 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/02 15:53:04 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 11:38:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include "../libft/libft.h"
+
+void print_path_id_availability(t_graph *g)
+{
+	int i;
+	int printed;
+
+	i = 1;
+	printed = 0;
+	while (i < MAX_PATHS && printed < g->nb_of_paths)
+	{
+		if (g->path_id_availability[i] == 1)
+		{
+			ft_putstr("NOT AVAILABLE: ");
+			ft_putnbr(i);
+			ft_putendl("");
+			printed++;
+		}
+		else
+		{
+			ft_putstr("AVAILABLE: ");
+			ft_putnbr(i);
+			ft_putendl("");
+		}
+		i++;
+	}
+}
 
 t_path	*find_optimal_path(t_graph *g)
 {
@@ -21,13 +47,13 @@ t_path	*find_optimal_path(t_graph *g)
 
 	shortest_index = -1;
 	shortest = INT_MAX;
-	i = 0;
-	while (g->paths[i] && i < g->nb_of_paths)
+	i = 1;
+	while (i < MAX_PATHS)
 	{
-		if (g->paths[i]->ants + g->paths[i]->path_length < shortest)
+		if (g->path_id_availability[i] == 1 && g->paths[i - 1]->ants + g->paths[i - 1]->path_length < shortest)
 		{
-			shortest = g->paths[i]->ants + g->paths[i]->path_length;
-			shortest_index = i;
+			shortest = g->paths[i - 1]->ants + g->paths[i - 1]->path_length;
+			shortest_index = i - 1;
 		}
 		i++;
 	}
@@ -67,9 +93,7 @@ void	free_graph(t_graph *g)
 		free_ant(g->ants[i++]);
 	free(g->ants);
 	i = 0;
-	while (g->paths[i] && i < g->nb_of_paths)
-		free_path(g->paths[i++]);
-	free(g->paths);
+	free_all_paths(g->paths, g);
 	free(g);
 }
 

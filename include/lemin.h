@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/02 16:01:28 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 11:50:55 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define MAX_LINES 30000
 # define QUEUE_MAX 30000
 # define MAX_PATHS 1000
-# define DEBUGGING 2
+# define DEBUGGING 0
 # include <unistd.h>
 # include <stdio.h>
 # include "../libft/libft.h"
@@ -131,8 +131,8 @@ t_node	*find_path(t_node *node, t_graph *graph, int path_id);
 int		traverse_path(t_graph *g, int path_id);
 void	traverse_paths(t_graph *g);
 void	save_paths_data(t_graph *g);
-void	free_path(t_path *p);
-void	free_all_paths(t_path **paths, int nb_of_paths);
+void	free_path(t_path *p, t_graph *g);
+void	free_all_paths(t_path **paths, t_graph *g);
 t_path	*new_path(int path_length, int path_id);
 t_path	*create_path(t_graph *g, int path_id);
 void	print_path(t_path *p);
@@ -175,9 +175,10 @@ void	the_great_switcharoo(t_graph *g);
 int		count_c(char *l, char c);
 int		count_lines_with_id(char **lines, int id);
 void	exit_program(int ret, char *msg);
+void print_path_id_availability(t_graph *g);
 
 // Output
-void	print_paths(t_path **p, int nb_of_paths, int length_mode);
+void	print_paths(t_path **p, int length_mode, t_graph *g);
 void	print_ant_movement(int ant_id, char *node_name, int first);
 void	print_farm(t_graph *g);
 void	print_nodes(t_node **nodes);

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 23:24:57 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/02 15:21:33 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 11:56:28 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,36 @@ t_path *copy_path(t_path *p)
 	return (new_p);
 }
 
-void	free_path(t_path *p)
+void	free_path(t_path *p, t_graph *g)
 {
+	if (DEBUGGING > 0)
+	{
+		ft_putstr("freeing path: ");
+		ft_putnbr(p->id);
+		ft_putendl("");
+	}
+	g->path_id_availability[p->id] = 0;
 	free(p->nodes);
 	free(p);
 }
 
-void	free_all_paths(t_path **paths, int nb_of_paths)
+void	free_all_paths(t_path **paths, t_graph *g)
 {
 	int i;
 
-	i = 0;
-	while (i < nb_of_paths - 1)
+	i = 1;
+	while (i < MAX_PATHS)
 	{
-		ft_putstr("freeing path: ");
-		ft_putnbr(i);
-		ft_putendl("");
-		free_path(paths[i]);
+		if (g->path_id_availability[i] == 1)
+		{
+			if (DEBUGGING > 0)
+			{
+				ft_putstr("freeing path: (");
+				ft_putnbr(i);
+				ft_putendl(")");
+			}
+			free_path(paths[i - 1], g);
+		}
 		i++;
 	}
 }

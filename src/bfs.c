@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/02 16:45:21 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 12:04:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	backtrack(t_graph *graph, t_node *start, t_node *end, int path_id)
 	node->path_id = path_id;
 	while (node)
 	{
-		print_node(node);
+		if (DEBUGGING > 0)
+			print_node(node);
 		check_smallest_path(graph, node);
 		node = graph->history[node->id];
 		visit_node(node, graph, path_id);
@@ -72,7 +73,8 @@ int	free_bfs(t_graph *g, t_queue *q)
 
 void	set_start_node(t_queue *q, t_graph *g, t_node *start)
 {
-		print_node(start);
+		if (DEBUGGING > 0)
+			print_node(start);
 		enqueue(q, g->start);
 		start->visited = 1;
 }
@@ -86,7 +88,8 @@ void	visit_neighbour(t_node *nd, t_node *ng, t_queue *q, t_graph *g)
 	g->history[ng->id] = nd;
 	if (ng->is_end == 1)
 	{
-		ft_putendl("end node visited");
+		if (DEBUGGING > 0)
+			ft_putendl("end node visited");
 		g->path_found = 1;
 	}
 }
@@ -98,14 +101,16 @@ int	bfs(t_graph *g, int tolerate_visit, t_node *start, t_node *end)
 	static	t_queue* q;
 	int			path_id;
 
-	ft_putendl("running bfs");
+	if (DEBUGGING > 0)
+		ft_putendl("running bfs");
 	q = new_queue(g->nb_of_nodes + 1);
 	g->history = (t_node **)malloc(sizeof(t_node *) * (g->nb_of_nodes + 1));
 	set_start_node(q, g, start);
 	while (!is_empty(q) && g->path_found != 1)
 	{
 		node = dequeue(q);
-		print_node(node);
+		if (DEBUGGING > 0)
+			print_node(node);
 		neighbour = find_neighbour(node, g, tolerate_visit);
 		while (neighbour)
 		{
@@ -115,14 +120,20 @@ int	bfs(t_graph *g, int tolerate_visit, t_node *start, t_node *end)
 	}
 	if (g->path_found == 1)
 	{
-		ft_putendl("backtracking");
+		if (DEBUGGING > 0)
+			ft_putendl("backtracking");
 		path_id = find_first_free_path_id(g);
 		backtrack(g, start, end, path_id);
-		ft_putendl("creating path");
+		if (DEBUGGING > 0)
+			ft_putendl("creating path");
 		g->paths[path_id - 1] = create_path(g, path_id);
-		ft_putendl("printing path");
-		print_path(g->paths[path_id - 1]);
+		if (DEBUGGING > 0)
+		{
+			ft_putendl("printing path");
+			print_path(g->paths[path_id - 1]);
+		}
 	}
-	ft_putendl("exiting bfs");
+	if (DEBUGGING > 0)
+		ft_putendl("exiting bfs");
 	return (free_bfs(g, q));
 }

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 19:06:39 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/01 17:02:16 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 11:22:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,29 @@ void	print_path(t_path *p)
 	print_nodes(p->nodes);
 }
 
-void	print_paths(t_path **p, int nb_of_paths, int length_mode)
+void	print_paths(t_path **p, int length_mode, t_graph *g)
 {
 	int	i;
 
-	i = 0;
-	while (p[i] && i <= nb_of_paths)
+
+	print_path_id_availability(g);
+	i = 1;
+	while (i < MAX_PATHS)
 	{
-		ft_putstr("path (");
-		ft_putnbr(i + 1);
-		ft_putendl(")");
-		if (length_mode)
+		if (g->path_id_availability[i] == 1)
 		{
-			ft_putstr("path len: ");
-			ft_putnbr(p[i]->path_length);
+			ft_putstr("path (");
+			ft_putnbr(p[i -1]->id);
+			ft_putendl(")");
+			if (length_mode)
+			{
+				ft_putstr("path len: ");
+				ft_putnbr(p[i - 1]->path_length);
+				ft_putendl("");
+			}
+			print_path(p[i - 1]);
 			ft_putendl("");
 		}
-		print_path(p[i]);
-		ft_putendl("");
 		i++;
 	}
 }

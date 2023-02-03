@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/02 17:04:57 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 12:01:13 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ t_edge *find_double_used_edge(t_graph *g)
 	{
 		if (g->edges[i]->start->old_path_id && g->edges[i]->end->old_path_id)
 		{
-			ft_putendl("doublle used edge found");
-			print_edge(g->edges[i]);
-			ft_putendl("");
+			if (DEBUGGING > 0)
+			{
+				ft_putendl("doublle used edge found");
+				print_edge(g->edges[i]);
+				ft_putendl("");
+			}
 			return (g->edges[i]);
 		}
 		i++;
