@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/03 11:50:55 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 14:40:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_graph
 	int		nb_of_rounds;
 	int		backpedaled;
 
+	char		*best_path_id_availability;
 	char		*path_id_availability;
 	t_node	*start;
 	t_node	*end;
@@ -160,10 +161,10 @@ void	handle_nodes(char **lines, t_graph *g);
 int		identify_line(char *line, int line_nb);
 
 // Algorithms
-int		bfs(t_graph *g, int tolerate_visit, t_node *start, t_node *end);
+int		bfs(t_graph *g, t_node *start, t_node *end);
 int		free_bfs(t_graph *g, t_queue *q);
 int		backtrack(t_graph *graph, t_node *start, t_node *end, int path_id);
-t_node	*find_neighbour(t_node *node, t_graph *graph, int tolerate_visit);
+t_node	*find_neighbour(t_node *node, t_graph *graph);
 void	visit_neighbour(t_node *nd, t_node *ng, t_queue *q, t_graph *g);
 void	set_start_node(t_queue *q, t_graph *g, t_node *start);
 

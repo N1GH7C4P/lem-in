@@ -86,11 +86,19 @@ void	save_paths_data(t_graph *g)
 {
 	int i;
 
-	g->best_paths = (t_path **)malloc(sizeof(t_path *) * g->nb_of_paths + 1);
 	i = 0;
-	while (i < g->nb_of_paths)
+	free(g->best_paths);
+	free(g->best_path_id_availability);
+	
+	g->best_paths = (t_path **)malloc(sizeof(t_path *) * MAX_PATHS + 1);
+	g->best_path_id_availability = (char *)malloc(MAX_PATHS + 1);
+	while (i < MAX_PATHS)
 	{
-		g->best_paths[i] = copy_path(g->paths[i]);
+		if (g->path_id_availability[i] == 1)
+		{
+			g->best_path_id_availability[i] = 1;
+			g->best_paths[i - 1] = copy_path(g->paths[i - 1]);
+		}
 		i++;
 	}
 	g->least_nb_of_rounds = g->nb_of_rounds;

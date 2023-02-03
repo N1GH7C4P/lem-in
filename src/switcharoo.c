@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 10:38:06 by marvin            #+#    #+#             */
-/*   Updated: 2023/02/03 12:07:19 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 13:48:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,13 @@ t_path *combine_paths(t_path *src1, t_path *src2, t_edge *e, t_graph *g)
 		i++;
 		j++;
 	}
+	dest->nodes[i] = NULL;
 	if (DEBUGGING > 0)
 	{
 		ft_putendl("Combined path: ");
+		ft_putstr("len: ");
+		ft_putnbr(dest->path_length);
+		ft_putendl("");
 		print_path(dest);
 		ft_putendl("Path printed");
 	}

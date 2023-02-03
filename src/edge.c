@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:31:02 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/03 12:01:13 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 14:07:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_edge *find_double_used_edge(t_graph *g)
 }
 
 // Checks if either node of the edge (e) matches to a given node (n) in graph (g)
-static t_node *check_edge(t_edge *e, t_node *n, t_graph *g, int tolerate_visit)
+static t_node *check_edge(t_edge *e, t_node *n, t_graph *g)
 {
 	if (!e || !n || !g)
 		return (NULL);
@@ -44,7 +44,7 @@ static t_node *check_edge(t_edge *e, t_node *n, t_graph *g, int tolerate_visit)
 	{
 		if (e->start->visited == 0)
 		{
-			if (e->start->path_id == 0 || (tolerate_visit == 1 && e->start->visited == 2) || e->start->is_end == 1)
+			if (e->start->path_id == 0 || e->start->is_end == 1)
 					return (e->start);
 		}
 	}
@@ -52,7 +52,7 @@ static t_node *check_edge(t_edge *e, t_node *n, t_graph *g, int tolerate_visit)
 	{
 		if(e->end->visited == 0)
 		{
-			if (e->end->path_id == 0 || (tolerate_visit == 1 && e->end->visited == 2) || e->end->is_end == 1)
+			if (e->end->path_id == 0 || e->end->is_end == 1)
 				return (e->end);
 		}
 	}
@@ -60,7 +60,7 @@ static t_node *check_edge(t_edge *e, t_node *n, t_graph *g, int tolerate_visit)
 }
 
 // Finds neighbous of node (n) in graph (g)
-t_node	*find_neighbour(t_node *n, t_graph *g, int tolerate_visit)
+t_node	*find_neighbour(t_node *n, t_graph *g)
 {
 	int 	i;
 	t_node	*ret;
@@ -68,7 +68,7 @@ t_node	*find_neighbour(t_node *n, t_graph *g, int tolerate_visit)
 	i = 0;
 	while (i < g->nb_of_edges)
 	{
-		ret = check_edge(g->edges[i], n, g, tolerate_visit);
+		ret = check_edge(g->edges[i], n, g);
 		if (ret)
 			return (ret);
 		i++;

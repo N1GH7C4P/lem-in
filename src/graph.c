@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 15:58:27 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/03 11:38:36 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 13:27:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,15 @@ t_graph	*create_graph(void)
 	new_graph = (t_graph *)malloc(sizeof(t_graph));
 	new_graph->paths = (t_path **)malloc(sizeof(t_path *) * (MAX_PATHS + 1));
 	new_graph->path_id_availability = (char *)malloc(MAX_PATHS + 1);
+	new_graph->best_path_id_availability = (char *)malloc(MAX_PATHS + 1);
+	new_graph->best_paths = (t_path **)malloc(sizeof(t_path *) * MAX_PATHS + 1);
 	new_graph->nb_of_nodes = 0;
 	new_graph->nb_of_edges = 0;
 	new_graph->nb_of_paths = 0;
 	new_graph->ants_placed = 0;
 	new_graph->ants_finished = 0;
 	new_graph->lines = 0;
+	new_graph->least_nb_of_rounds = INT_MAX;
 	return (new_graph);
 }
 

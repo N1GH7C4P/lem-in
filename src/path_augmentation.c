@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 14:48:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/03 12:05:54 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 14:31:33 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,15 +225,13 @@ int	find_augmenting_paths(t_graph *g)
 	int ret;
 	int path_id;
 
-	//print_nodes(g->nodes);
-	//ft_putendl("nodes printed");
 	ret = augmenting_bfs(g, g->start, g->end);
-	//print_nodes(g->nodes);
 	if (ret == 1)
 	{
 		path_id = find_first_free_path_id(g);
 		backtrack(g, g->start, g->end, path_id);
 		g->paths[path_id - 1] = create_path(g, path_id);
+		return (1);
 	}
 	return (0);
 }

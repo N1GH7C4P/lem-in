@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 12:58:50 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/03 12:04:12 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 14:39:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	backtrack(t_graph *graph, t_node *start, t_node *end, int path_id)
 {
 	t_node	*node;
 
+	if (DEBUGGING > 0)
+			ft_putendl("backtracking");
 	node = end;
 	if (node->path_id)
 		node->old_path_id = node->path_id;
@@ -49,7 +51,9 @@ int	backtrack(t_graph *graph, t_node *start, t_node *end, int path_id)
 		if (DEBUGGING > 0)
 			print_node(node);
 		check_smallest_path(graph, node);
-		node = graph->history[node->id];
+		node = node->previous;
+		if (DEBUGGING > 0)
+			print_node(node);
 		visit_node(node, graph, path_id);
 		if (node == start)
 			break ;
@@ -94,13 +98,14 @@ void	visit_neighbour(t_node *nd, t_node *ng, t_queue *q, t_graph *g)
 	}
 }
 
-int	bfs(t_graph *g, int tolerate_visit, t_node *start, t_node *end)
+int	bfs(t_graph *g, t_node *start, t_node *end)
 {
 	t_node	*node;
 	t_node	*neighbour;
 	static	t_queue* q;
 	int			path_id;
 
+	end->visited = 0;
 	if (DEBUGGING > 0)
 		ft_putendl("running bfs");
 	q = new_queue(g->nb_of_nodes + 1);
@@ -111,11 +116,11 @@ int	bfs(t_graph *g, int tolerate_visit, t_node *start, t_node *end)
 		node = dequeue(q);
 		if (DEBUGGING > 0)
 			print_node(node);
-		neighbour = find_neighbour(node, g, tolerate_visit);
+		neighbour = find_neighbour(node, g);
 		while (neighbour)
 		{
 			visit_neighbour(node, neighbour, q, g);
-			neighbour = find_neighbour(node, g, tolerate_visit);
+			neighbour = find_neighbour(node, g);
 		}
 	}
 	if (g->path_found == 1)

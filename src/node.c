@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 14:18:31 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/01 14:36:47 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/03 13:46:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	print_nodes(t_node **nodes)
 
 	i = 0;
 	while (nodes[i])
-		print_node(nodes[i++]);
+	{
+		print_node(nodes[i]);
+		i++;
+	}
 }
 
 void	print_node(t_node *node)
