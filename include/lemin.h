@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 14:38:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/03 14:40:20 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/06 14:03:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ typedef struct s_queue
 // Ants
 void	advance_ants(t_graph *g, int i, int first_ant, int print);
 void	place_ant_on_path(t_path *p, t_ant *a, t_graph *g);
-void	place_all_ants(t_graph *g, int print);
+void	place_all_ants(t_graph *g, int print, int use_saved_paths);
 t_ant	*new_ant(int id);
 void	free_ant(t_ant *a);
 void	reset_ants(t_graph *g);
@@ -139,7 +139,7 @@ t_path	*create_path(t_graph *g, int path_id);
 void	print_path(t_path *p);
 int		count_nodes_with_path_id(t_graph *g, int path_id);
 t_node	*find_next_node_in_path(t_node *node, t_graph *graph, int path_id);
-t_path	*find_optimal_path(t_graph *g);
+t_path	*find_optimal_path(t_path **paths, char *ids);
 t_path *copy_path(t_path *p);
 
 // Node
@@ -176,10 +176,10 @@ void	the_great_switcharoo(t_graph *g);
 int		count_c(char *l, char c);
 int		count_lines_with_id(char **lines, int id);
 void	exit_program(int ret, char *msg);
-void print_path_id_availability(t_graph *g);
+void	print_path_id_availability(char *ids, int nb_of_paths);
 
 // Output
-void	print_paths(t_path **p, int length_mode, t_graph *g);
+void	print_paths(t_path **p, int length_mode, char *ids, int nb_of_paths);
 void	print_ant_movement(int ant_id, char *node_name, int first);
 void	print_farm(t_graph *g);
 void	print_nodes(t_node **nodes);

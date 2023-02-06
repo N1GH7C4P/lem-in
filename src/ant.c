@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 15:04:39 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/02 16:02:18 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/06 14:03:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,55 @@ void	reset_ants(t_graph *g)
 		free_ant(g->ants[i]);
 		i++;
 	}
+	i = 0;
+	while (i < g->nb_of_paths)
+	{
+			if (g->path_id_availability[i] == 1)
+				g->paths[i - 1]->ants = 0;
+			i++;
+	}
+	i = 0;
+	while (i < g->nb_of_nodes)
+	{
+		g->nodes[i]->ant_present = 0;
+		i++;
+	}
 	g->ants_available += g->ants_finished;
 	g->ants_finished = 0;
 	g->ants_placed = 0;
 }
 
-void	place_all_ants(t_graph *g, int print)
+void	place_all_ants(t_graph *g, int print, int use_saved_paths)
 {
 	t_path	*p;
-	t_ant	*a;
+	t_path	**paths;
+	t_ant		*a;
+	char		*ids;
 
+	if (DEBUGGING > 0)
+	{
+		ft_putstr("number of ants: ");
+		ft_putnbr(g->ants_available);
+		ft_putendl("");
+		ft_putendl("new paths:");
+		print_paths(g->paths, 1, g->path_id_availability, g->nb_of_paths);
+		ft_putendl("old paths");
+		print_paths(g->best_paths, 1, g->best_path_id_availability, g->nb_of_best_paths);
+	}
 	g->nb_of_rounds = 0;
+	if (use_saved_paths == 1)
+	{
+		ids =	g->best_path_id_availability;
+		paths = g->best_paths;
+	}
+	else
+	{
+		ids =	g->path_id_availability;
+		paths = g->paths;
+	}
 	while (g->ants_available > 0)
 	{
-		p = find_optimal_path(g);
+		p = find_optimal_path(paths, ids);
 		a = new_ant(g->ants_placed);
 		place_ant_on_path(p, a, g);
 	}

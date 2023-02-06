@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 13:59:11 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/03 12:03:00 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/06 12:36:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	count_nodes_with_path_id(t_graph *g, int id)
 // -1: Ants, 0: Comment, 1: Edge, 2: Node
 int	identify_line(char *line, int line_nb)
 {
+	if (DEBUGGING == 3)
+		ft_putendl(line);
 	if (line_nb == 0)
 		return (-1);
 	if (line[0] == '#')

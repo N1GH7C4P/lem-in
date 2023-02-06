@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 19:06:39 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/03 11:22:33 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/06 14:00:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ void	print_path(t_path *p)
 	print_nodes(p->nodes);
 }
 
-void	print_paths(t_path **p, int length_mode, t_graph *g)
+void	print_paths(t_path **p, int length_mode, char *ids, int nb_of_paths)
 {
 	int	i;
 
 
-	print_path_id_availability(g);
+	print_path_id_availability(ids, nb_of_paths);
 	i = 1;
 	while (i < MAX_PATHS)
 	{
-		if (g->path_id_availability[i] == 1)
+		if (ids[i] == 1)
 		{
 			ft_putstr("path (");
 			ft_putnbr(p[i -1]->id);
@@ -55,6 +55,12 @@ void	print_paths(t_path **p, int length_mode, t_graph *g)
 			{
 				ft_putstr("path len: ");
 				ft_putnbr(p[i - 1]->path_length);
+				ft_putendl("");
+			}
+			if (DEBUGGING > 0)
+			{
+				ft_putstr("ants on path: ");
+				ft_putnbr(p[i - 1]->ants);
 				ft_putendl("");
 			}
 			print_path(p[i - 1]);

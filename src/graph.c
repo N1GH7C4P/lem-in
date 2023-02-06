@@ -6,23 +6,23 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 15:58:27 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/03 13:27:41 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/06 13:50:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/lemin.h"
 #include "../libft/libft.h"
 
-void print_path_id_availability(t_graph *g)
+void print_path_id_availability(char *ids, int nb_of_paths)
 {
 	int i;
 	int printed;
 
 	i = 1;
 	printed = 0;
-	while (i < MAX_PATHS && printed < g->nb_of_paths)
+	while (i < MAX_PATHS && printed < nb_of_paths)
 	{
-		if (g->path_id_availability[i] == 1)
+		if (ids[i] == 1)
 		{
 			ft_putstr("NOT AVAILABLE: ");
 			ft_putnbr(i);
@@ -39,7 +39,7 @@ void print_path_id_availability(t_graph *g)
 	}
 }
 
-t_path	*find_optimal_path(t_graph *g)
+t_path	*find_optimal_path(t_path **paths, char *ids)
 {
 	int	i;
 	int	shortest;
@@ -50,14 +50,25 @@ t_path	*find_optimal_path(t_graph *g)
 	i = 1;
 	while (i < MAX_PATHS)
 	{
-		if (g->path_id_availability[i] == 1 && g->paths[i - 1]->ants + g->paths[i - 1]->path_length < shortest)
+		if (ids[i] == 1 && paths[i - 1]->ants + paths[i - 1]->path_length < shortest)
 		{
-			shortest = g->paths[i - 1]->ants + g->paths[i - 1]->path_length;
+			shortest = paths[i - 1]->ants + paths[i - 1]->path_length;
 			shortest_index = i - 1;
 		}
 		i++;
 	}
-	return (g->paths[shortest_index]);
+	if (DEBUGGING > 0)
+	{
+		ft_putstr("shortest path: (");
+		ft_putnbr(paths[shortest_index]->id);
+		ft_putstr(") len: ");
+		ft_putnbr(paths[shortest_index]->path_length);
+		ft_putstr(" ants: ");
+		ft_putnbr(paths[shortest_index]->ants);
+		ft_putendl("");
+		
+	}
+	return (paths[shortest_index]);
 }
 
 t_graph	*create_graph(void)

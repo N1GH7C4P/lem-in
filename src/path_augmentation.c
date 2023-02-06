@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 14:48:26 by kpolojar          #+#    #+#             */
-/*   Updated: 2023/02/03 14:31:33 by marvin           ###   ########.fr       */
+/*   Updated: 2023/02/06 14:05:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,12 +159,14 @@ void	backpedal_existing_path(t_node *n, t_queue *q, t_graph *g)
 	backpedal = find_backpedal_node(n, g);
 	if (backpedal)
 	{
-		if (backpedal->first_node_in_path == 1)
+		/*
+			if (backpedal->first_node_in_path == 1)
 		{
 			if (DEBUGGING > 0)
 				ft_putendl("No backpedaling to first node in path");
 			return;
 		}
+		*/
 		n->backpedaled = 1;
 		backpedal->visited = 1;
 		g->history[backpedal->id] = n;
